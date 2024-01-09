@@ -16,7 +16,7 @@ public class Conexion {
     private static final String CONTRASENA = "1234";
 
     // Método para obtener la conexión a la base de datos
-    public static Connection obtenerConexion() {
+    public static Connection getConexion() {
         Connection connection = null;
 
         try {
@@ -42,7 +42,7 @@ public class Conexion {
     }
 
     // Método para cerrar la conexión
-    public static void cerrarConexion(Connection connection) {
+    public static void closeConexion(Connection connection) {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
