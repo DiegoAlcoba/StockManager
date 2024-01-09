@@ -4,10 +4,6 @@
  */
 package controlador;
 
-/**
- *
- * @author diego
- */
 public class Empleado {
     
 }
