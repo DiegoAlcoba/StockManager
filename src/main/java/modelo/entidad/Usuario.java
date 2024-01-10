@@ -1,13 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modelo.entidad;
-
-/**
- *
- * @author diego
- */
 public class Usuario {
+    private String nombre;
+    private String dni;
+    private boolean administrador;
+
+    public Usuario(String nombre, String dni, boolean administrador){
+        this.nombre = nombre;
+        this.administrador = administrador;
+        this.dni = dni;
+    }
+
+
+
+
     
 }
