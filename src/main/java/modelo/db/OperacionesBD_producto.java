@@ -7,10 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.entidad.Producto;
 
+/**
+ *
+ * @author diego
+ */
 public class OperacionesBD_producto {
 
-    // Método para insertar un nuevo registro
-    public static void addProducto_BD(Producto prod) {
+    // Método para insertar un nuevo producto en la BD
+    public static void addProducto_BD (Producto prod) {
         String query = "INSERT INTO PRODUCTO (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
 
         //Se realiza la conexión a la BD y se prepara la sentencia SQL para la consulta
@@ -25,15 +29,18 @@ public class OperacionesBD_producto {
             preparedStatement.setBigDecimal(5, prod.getPrecio());
 
             // Ejecuta la consulta SQL
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();  //Sentencia que modifica la base de datos
 
-            System.out.println("Datos insertados correctamente.");
+            System.out.println("Producto añadido correctamente.");
+            
+        //Si se ejecuta el try cierra la conexión automáticamente al finalizar la consulta
         } catch (SQLException e) {
-            System.err.println("Error al insertar datos: " + e.getMessage());
+            System.err.println("Error al insertar producto: " + e.getMessage());
         }
     }
     
-    public static Producto getProducto_BD(String nombreProd) {
+    //Obtener el producto con el nombre especificado de la BD
+    public static Producto getProducto_BD (String nombreProd) {
         String query = "SELECT * FROM PRODUCTO WHERE nombreProd = ?";
 
         try (Connection conn = Conexion.getConexion();
@@ -41,7 +48,7 @@ public class OperacionesBD_producto {
 
             preparedStatement.setString(1, nombreProd);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) { //Sentencia que devuelve un conjunto de resultados
                 
                 if (resultSet.next()) {
                     Producto prod = new Producto();
@@ -66,23 +73,42 @@ public class OperacionesBD_producto {
         }
     }
     
+    //Actualizar cantidad de un producto de la BD
+    public static void newCantidad_BD (String nombreProd, int nCant) {
+        String query = "UPDATE PRODUCTO  SET cantidad = ? WHERE nombreProd = ?";
+        
+          try (Connection conn = Conexion.getConexion();
+             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
+              preparedStatement.setInt(1, nCant);
+              preparedStatement.setString(2, nombreProd);
+
+              preparedStatement.executeUpdate();
+
+              System.out.println("Cantidad del producto actualizada correctamente");
+              
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar la cantidad: " + e.getMessage());
+        }
+    }
     
-    
-    
+    //Eliminar producto de la BD
+    public static void delProducto_BD (String nombreProd) {
+        String query = "DELETE FROM PRODUCTO WHERE nombreProd = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+            PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            
+            preparedStatement.setString(1, nombreProd);
+            preparedStatement.executeUpdate();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            System.out.println("Producto eliminado correctamente");
+              
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el producto: " + e.getMessage());
+        }
+        
+    }
 
 
 

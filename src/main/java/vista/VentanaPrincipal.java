@@ -4,6 +4,12 @@
  */
 package vista;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.db.Conexion;
+
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     /**
@@ -72,6 +78,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         
+        //**PRESCINDIBLE** para depuración - app se conecta a la BD correctamente al iniciar
+        Connection con = Conexion.getConexion();
+        //Desconexión de la BD
+        Conexion.closeConexion(con);
 
        
     }
