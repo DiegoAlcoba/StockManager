@@ -1,62 +1,77 @@
+package modelo.entidad;
+
+import java.math.BigDecimal;
+
 public class Producto {
     private String nombre;
+    private String distribuidor;
     private String tipo;
-    private int precioVenta;
-    private int cantActual;
-    private int cantMinima;
+    private BigDecimal coste;
+    private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
+    private int cantMin;
     private int cantMax;
-    public Producto(String name, String tipo, int price, int actual, int min, int max){
+    
+    public Producto(String name, String distribId, String tipo, BigDecimal precio, int cant, int cMin, int cMax){
         this.nombre = name;
         this.tipo = tipo;
+        this.distribuidor = distribId;
         //TODO: añadir exceptions para precios y cantidades negativas.
-        this.precioVenta = price;
-        this.cantActual = actual;
-        this.cantMinima = min;
-        this.cantMax = max;
+        this.coste = precio;
+        this.cantidad = cant;
+        this.cantMin = cMin;
+        this.cantMax = cMax;
     }
     //Setters
     public void setName(String nombre){
         this.nombre = nombre;
+    }
+    
+    public void setDistribuidor(String distribuidor) {
+        this.distribuidor = distribuidor;
     }
 
     public void setTipo(String tipo){
         this.tipo = tipo;
     }
 
-    public void setPrecioVenta(int price){
-        this.precioVenta = price;
+    public void setPrecio(BigDecimal precio){
+        this.coste = precio;
     }
 
     public void setCantActual(int cant){
-        this.cantActual = cant;
+        this.cantidad = cant;
     }
 
-    public void setCantMin(int cant){
-        this.cantActual = cant;
+    public void setCantMin(int cMin){
+        this.cantMin = cMin;
     }
 
-    public void setCantMax(int max){
-        this.cantMax = max;
+    public void setCantMax(int cMax){
+        this.cantMax = cMax;
     }
     //Getters
     public String getName(){
         return this.nombre;
+    }
+    
+    public String getDistrib() {
+        return this.distribuidor;
     }
 
     public String getTipo(){
         return this.tipo;
     }
 
-    public int getPrecioVenta(){
-        return this.precioVenta;
+    public BigDecimal getPrecio(){
+        return this.coste;
     }
 
     public int getCantActual(){
-        return this.cantActual;
+        return this.cantidad;
     }
 
     public int getCantMin(){
-        return this.cantMinima;
+        return this.cantMin;
     }
 
     public int getCantMax(){
@@ -64,9 +79,7 @@ public class Producto {
     }
     
     public boolean isEqual(Producto producto){
-        if(this.nombre == producto.getName() && this.tipo == producto.getTipo()){
-            return true;
-        }
-        return false;
+         // Comprobación de nulidad y comparación de cadenas
+         return this.nombre != null && producto != null && this.nombre.equals(producto.getName()) && this.tipo != null && this.tipo.equals(producto.getTipo());
     }
 }
