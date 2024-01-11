@@ -1,5 +1,8 @@
+package modelo.entidad;
+
 import java.util.ArrayList;
 import java.util.List;
+import modelo.entidad.Producto;
 
 public class Pedido {
     private List<Producto> productos;

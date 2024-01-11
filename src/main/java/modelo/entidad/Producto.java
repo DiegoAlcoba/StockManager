@@ -8,19 +8,20 @@ public class Producto {
     private String tipo;
     private BigDecimal coste;
     private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
-    private int cantMin;
-    private int cantMax;
     
-    public Producto(String name, String distribId, String tipo, BigDecimal precio, int cant, int cMin, int cMax){
+    public Producto() {
+        //Sobrecarga de productores, necesario para cuando se desea crear un objeto sin valores iniciales, se asignan después con el constructor de debajo
+    }
+    
+    public Producto(String name, String distribId, String tipo, BigDecimal precio, int cant){
         this.nombre = name;
         this.tipo = tipo;
         this.distribuidor = distribId;
         //TODO: añadir exceptions para precios y cantidades negativas.
         this.coste = precio;
         this.cantidad = cant;
-        this.cantMin = cMin;
-        this.cantMax = cMax;
     }
+
     //Setters
     public void setName(String nombre){
         this.nombre = nombre;
@@ -38,17 +39,10 @@ public class Producto {
         this.coste = precio;
     }
 
-    public void setCantActual(int cant){
+    public void setCantidad(int cant){
         this.cantidad = cant;
     }
 
-    public void setCantMin(int cMin){
-        this.cantMin = cMin;
-    }
-
-    public void setCantMax(int cMax){
-        this.cantMax = cMax;
-    }
     //Getters
     public String getName(){
         return this.nombre;
@@ -66,16 +60,8 @@ public class Producto {
         return this.coste;
     }
 
-    public int getCantActual(){
+    public int getCantidad(){
         return this.cantidad;
-    }
-
-    public int getCantMin(){
-        return this.cantMin;
-    }
-
-    public int getCantMax(){
-        return this.cantMax;
     }
     
     public boolean isEqual(Producto producto){

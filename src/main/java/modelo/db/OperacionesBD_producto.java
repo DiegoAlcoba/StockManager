@@ -10,7 +10,7 @@ import modelo.entidad.Producto;
 public class OperacionesBD_producto {
 
     // Método para insertar un nuevo registro
-    public static void addProducto(Producto prod) {
+    public static void addProducto_BD(Producto prod) {
         String query = "INSERT INTO PRODUCTO (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
 
         //Se realiza la conexión a la BD y se prepara la sentencia SQL para la consulta
@@ -21,7 +21,7 @@ public class OperacionesBD_producto {
             preparedStatement.setString(1, prod.getName());
             preparedStatement.setString(2, prod.getDistrib());
             preparedStatement.setString(3, prod.getTipo());
-            preparedStatement.setInt(4, prod.getCantActual());
+            preparedStatement.setInt(4, prod.getCantidad());
             preparedStatement.setBigDecimal(5, prod.getPrecio());
 
             // Ejecuta la consulta SQL
@@ -33,7 +33,7 @@ public class OperacionesBD_producto {
         }
     }
     
-    public static Producto getProducto(String nombreProd) {
+    public static Producto getProducto_BD(String nombreProd) {
         String query = "SELECT * FROM PRODUCTO WHERE nombreProd = ?";
 
         try (Connection conn = Conexion.getConexion();
@@ -48,8 +48,8 @@ public class OperacionesBD_producto {
                     prod.setName(resultSet.getString("nombreProd"));
                     prod.setDistribuidor(resultSet.getString("distribId"));
                     prod.setTipo(resultSet.getString("tipo"));
-                    prod.setCantActual(resultSet.getInt("cantidad"));
                     prod.setPrecio(resultSet.getBigDecimal("costeUnitario"));
+                    prod.setCantidad(resultSet.getInt("cantidad"));
                     
                     return prod;
                 
@@ -69,4 +69,22 @@ public class OperacionesBD_producto {
     
     
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
