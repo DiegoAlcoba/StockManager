@@ -3,11 +3,11 @@ import java.util.List;
 
 public class Pedido {
     private List<Producto> productos;
-    private List<Proveedor> proveedores;
+    private List<Distribuidor> distribuidores;
 
     public Pedido(){
         this.productos = new ArrayList<>();
-        this.proveedores = new ArrayList<>();
+        this.distribuidores = new ArrayList<>();
     }
 
     public boolean addProducto(Producto producto){
