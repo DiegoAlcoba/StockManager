@@ -2,7 +2,7 @@ CREATE TABLE USUARIO (
 	userId SERIAL,
 	nombreUsuario VARCHAR(30) NOT NULL,
 	contrasena VARCHAR(30) NOT NULL,
-	privilegios VARCHAR(30) NOT NULL,
+	privilegios BIT NOT NULL,
 	nombre VARCHAR(30) NOT NULL,
 	SSId INT NOT NULL,
 	email VARCHAR(50) NOT NULL,

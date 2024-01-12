@@ -10,6 +10,22 @@ public class Usuario {
     private String mail;
     private int tlfn;
     
+    
+    /*Este constructor se usa a la hora de crear un usuario en la aplicación (en la interfaz) por lo tanto aún no tiene ID*/
+    public Usuario(String username, String password, boolean isAdmin, String nombre, String dni, String mail, int tlfn) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.nombre = nombre;
+        this.dni = dni;
+        this.mail = mail;
+        this.tlfn = tlfn;
+    }
+    
+    /*Este constructor se usa cuando se recupera un usuario almacenado en la base de datos
+       La base de datos ha generado el ID, es decir, cuando se introdujo no tenía ID pero al recuperarlo sí
+       No hay que hacer ninguna distinción entre constructores, la aplicación decide cuál utiliza según los parámetros que recibe
+    */
     public Usuario(int userID, String username, String password, boolean isAdmin, String nombre, String dni, String mail, int tlfn) {
         this.userID = userID;
         this.username = username;
