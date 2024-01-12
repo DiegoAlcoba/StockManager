@@ -6,18 +6,18 @@ public class Usuario {
     private String password;
     private boolean isAdmin;
     private String nombre;
-    private String dni;
+    private int SSId;
     private String mail;
     private int tlfn;
     
     
     /*Este constructor se usa a la hora de crear un usuario en la aplicación (en la interfaz) por lo tanto aún no tiene ID*/
-    public Usuario(String username, String password, boolean isAdmin, String nombre, String dni, String mail, int tlfn) {
+    public Usuario(String username, String password, boolean isAdmin, String nombre, int SSId, String mail, int tlfn) {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
         this.nombre = nombre;
-        this.dni = dni;
+        this.SSId = SSId;
         this.mail = mail;
         this.tlfn = tlfn;
     }
@@ -26,13 +26,13 @@ public class Usuario {
        La base de datos ha generado el ID, es decir, cuando se introdujo no tenía ID pero al recuperarlo sí
        No hay que hacer ninguna distinción entre constructores, la aplicación decide cuál utiliza según los parámetros que recibe
     */
-    public Usuario(int userID, String username, String password, boolean isAdmin, String nombre, String dni, String mail, int tlfn) {
+    public Usuario(int userID, String username, String password, boolean isAdmin, String nombre, int SSId, String mail, int tlfn) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
         this.nombre = nombre;
-        this.dni = dni;
+        this.SSId = SSId;
         this.mail = mail;
         this.tlfn = tlfn;
     }
@@ -49,13 +49,13 @@ public class Usuario {
         return this.password;
     }
     
-    public String getPrivileges() {
+    public boolean getPrivileges() {
         return this.isAdmin;
     }
 
     
     public int getSSId() {
-        return this.dni;
+        return this.SSId;
     }
 
     public String getEmail() {
@@ -86,8 +86,8 @@ public class Usuario {
         this.isAdmin = isAdmin;
     }
 
-    public void setSSId(String dni) {
-        this.dni = dni;
+    public void setSSId(int ssid) {
+        this.SSId = ssid;
     }
 
     public void setEmail(String mail) {
@@ -103,7 +103,7 @@ public class Usuario {
     }
 
     public String toString() {
-        return "Usuario{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", isAdmin=" + isAdmin + ", nombre=" + nombre + ", dni=" + dni + ", mail=" + mail + ", tlfn=" + tlfn + '}';
+        return "Usuario{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", isAdmin=" + isAdmin + ", nombre=" + nombre + ", dni=" + SSId + ", mail=" + mail + ", tlfn=" + tlfn + '}';
     }
 
 }

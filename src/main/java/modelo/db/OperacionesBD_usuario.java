@@ -19,7 +19,7 @@ public class OperacionesBD_usuario {
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {
     
         // Se establece el valor a cada uno de los parámetro de la sentencia
-        preparedStatement.setInt(1, user.getUserId());
+        preparedStatement.setInt(1, user.getUserId()); //ID generado y autoincremental al crear un usuario en la base de datos
         preparedStatement.setString(2, user.getUsername());
         preparedStatement.setString(3, user.getPass());
         preparedStatement.setString(4, user.getPrivileges);
@@ -32,9 +32,9 @@ public class OperacionesBD_usuario {
         preparedStatement.executeUpdate();
         System.out.println("Usuario añadido correctamente.");
            
-    } catch (SQLException e) {
-        System.err.println("Error al añadir el usuario: " + e.getMessage());
-    }
+        } catch (SQLException e) {
+            System.err.println("Error al añadir el usuario: " + e.getMessage());
+        }
     }
     
 }
