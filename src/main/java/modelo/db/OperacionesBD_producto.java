@@ -15,7 +15,7 @@ public class OperacionesBD_producto {
 
     // Método para insertar un nuevo producto en la BD
     public static void addProducto_BD (Producto prod) {
-        String query = "INSERT INTO PRODUCTO (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO producto (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
 
         //Se realiza la conexión a la BD y se prepara la sentencia SQL para la consulta
         try (Connection conn = Conexion.getConexion();
@@ -23,7 +23,7 @@ public class OperacionesBD_producto {
 
             // Se establece el valor a cada uno de los parámetro de la sentencia
             preparedStatement.setString(1, prod.getName());
-            preparedStatement.setString(2, prod.getDistrib());
+            preparedStatement.setInt(2, prod.getDistribId());
             preparedStatement.setString(3, prod.getTipo());
             preparedStatement.setInt(4, prod.getCantidad());
             preparedStatement.setBigDecimal(5, prod.getPrecio());
@@ -41,7 +41,7 @@ public class OperacionesBD_producto {
     
     //Obtener el producto con el nombre especificado de la BD
     public static Producto getProducto_BD (String nombreProd) {
-        String query = "SELECT * FROM PRODUCTO WHERE nombreProd = ?";
+        String query = "SELECT * FROM producto WHERE nombreProd = ?";
 
         try (Connection conn = Conexion.getConexion();
              PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -53,7 +53,7 @@ public class OperacionesBD_producto {
                 if (resultSet.next()) {
                     Producto prod = new Producto();
                     prod.setName(resultSet.getString("nombreProd"));
-                    prod.setDistribuidor(resultSet.getString("distribId"));
+                    prod.setDistribuidorId(resultSet.getInt("distribId"));
                     prod.setTipo(resultSet.getString("tipo"));
                     prod.setPrecio(resultSet.getBigDecimal("costeUnitario"));
                     prod.setCantidad(resultSet.getInt("cantidad"));
@@ -75,7 +75,7 @@ public class OperacionesBD_producto {
     
     //Actualizar cantidad de un producto de la BD
     public static void newCantidad_BD (String nombreProd, int nCant) {
-        String query = "UPDATE PRODUCTO  SET cantidad = ? WHERE nombreProd = ?";
+        String query = "UPDATE producto  SET cantidad = ? WHERE nombreProd = ?";
         
           try (Connection conn = Conexion.getConexion();
              PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -94,7 +94,7 @@ public class OperacionesBD_producto {
     
     //Eliminar producto de la BD
     public static void delProducto_BD (String nombreProd) {
-        String query = "DELETE FROM PRODUCTO WHERE nombreProd = ?";
+        String query = "DELETE FROM producto WHERE nombreProd = ?";
         
         try (Connection conn = Conexion.getConexion();
             PreparedStatement preparedStatement = conn.prepareStatement(query)) {

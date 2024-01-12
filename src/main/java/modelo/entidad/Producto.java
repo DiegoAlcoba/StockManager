@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Producto {
     private String nombre;
-    private Distribuidor distribuidor;
+    private int distribId;
     private String tipo;
     private BigDecimal coste;
     private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
@@ -13,13 +13,13 @@ public class Producto {
         //Sobrecarga de productores, necesario para cuando se desea crear un objeto sin valores iniciales, se asignan después con el constructor de debajo
     }
     
-    public Producto(String name, Distribuidor distribId, String tipo, BigDecimal precio, int cant){
+    public Producto(String name, int distribId, String tipo, BigDecimal precio, int cant){
         if(precio.compareTo(BigDecimal.ZERO) < 0 || cant < 0){
             throw new IllegalArgumentException("El precio y la cantidad no pueden ser negativos");
         }
         this.nombre = name;
         this.tipo = tipo;
-        this.distribuidor = distribId;
+        this.distribId = distribId;
         this.coste = precio;
         this.cantidad = cant;
     }
@@ -29,8 +29,8 @@ public class Producto {
         this.nombre = nombre;
     }
     
-    public void setDistribuidor(Distribuidor distribuidor) {
-        this.distribuidor = distribuidor;
+    public void setDistribuidorId(int distribuidorID) {
+        this.distribId = distribuidorID;
     }
 
     public void setTipo(String tipo){
@@ -50,8 +50,8 @@ public class Producto {
         return this.nombre;
     }
     
-    public Distribuidor getDistrib() {
-        return this.distribuidor;
+    public int getDistribId() {
+        return this.distribId;
     }
 
     public String getTipo(){

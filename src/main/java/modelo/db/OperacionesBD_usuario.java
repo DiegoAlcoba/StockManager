@@ -2,7 +2,10 @@ package modelo.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import modelo.entidad.Producto;
 import modelo.entidad.Usuario;
 
 /**
@@ -13,20 +16,19 @@ public class OperacionesBD_usuario {
     
     //Insertar un nuevo usuario en la base de datos
     public static void addUser_BD (Usuario user) {
-        String query = "INSERT INTO USUARIO (userId, nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO USUARIO (nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexion.getConexion();
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {
     
         // Se establece el valor a cada uno de los parámetro de la sentencia
-        preparedStatement.setInt(1, user.getUserId()); //ID generado y autoincremental al crear un usuario en la base de datos
-        preparedStatement.setString(2, user.getUsername());
-        preparedStatement.setString(3, user.getPass());
-        preparedStatement.setString(4, user.getPrivileges);
-        preparedStatement.setString(5, user.getName());
-        preparedStatement.setInt(6, user.getSSId);
-        preparedStatement.setString(7, user.getEmail());
-        preparedStatement.setInt(8, user.getTlfn);
+        preparedStatement.setString(1, user.getUsername());
+        preparedStatement.setString(2, user.getPass());
+        preparedStatement.setBoolean(3, user.getPrivileges());
+        preparedStatement.setString(4, user.getNombre());
+        preparedStatement.setInt(5, user.getSSId());
+        preparedStatement.setString(6, user.getEmail());
+        preparedStatement.setInt(7, user.getTlfn());
         
         // Ejecuta la consulta SQL
         preparedStatement.executeUpdate();
@@ -37,4 +39,44 @@ public class OperacionesBD_usuario {
         }
     }
     
+    //Recuperar un usuario de la base de datos
+    public static Usuario getUsuario_BD (String username) {
+        String query = "SELECT * FROM usuario WHERE username = ?";
+
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+    
+        // Se establece el valor a cada uno de los parámetro de la sentencia
+        preparedStatement.setString(1, username);
+        
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                
+                if (resultSet.next()) {
+                    Usuario user = new Usuario();
+                    user.setUserId(resultSet.getInt("userId"));
+                    user.setUsername(resultSet.getString("nombreUsuario"));
+                    user.setPass(resultSet.getString("contrasena"));
+                    user.setPrivileges(resultSet.getBoolean("privilegios"));
+                    user.setNombre(resultSet.getString("nombre"));
+                    user.setSSId(resultSet.getInt("SSId"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setTlfn(resultSet.getInt("numTelefono"));
+                    
+                    return user;
+                
+                } else {
+                    // Manejar el caso en el que no se encuentra el producto
+                    return null;
+                }
+            }
+           
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el usuario: " + e.getMessage());
+
+            return null;
+        }
+    }
+
+
+
 }

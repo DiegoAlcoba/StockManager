@@ -10,6 +10,9 @@ public class Usuario {
     private String mail;
     private int tlfn;
     
+    public Usuario() {
+        //Constructor vacío para poder crear usuarios sin parámetros
+    }
     
     /*Este constructor se usa a la hora de crear un usuario en la aplicación (en la interfaz) por lo tanto aún no tiene ID*/
     public Usuario(String username, String password, boolean isAdmin, String nombre, int SSId, String mail, int tlfn) {
