@@ -77,6 +77,12 @@ public class OperacionesBD_usuario {
         }
     }
 
+    /*
+     * ACCIONES QUE FALTAN: Eliminar usuario; cambiar contraseña, cambiar privilegios, etc 
+     *                                        (O que actualice todo el perfil automáticamente? -> 
+     *                                         en código solo se alteran los campos que se requieran, 
+     *                                         se altera la tabla entera??)
+     */
 
 
 }
