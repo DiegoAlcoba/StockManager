@@ -15,7 +15,7 @@ public class OperacionesBD_usuario {
     
     //Insertar un nuevo usuario en la base de datos
     public static void addUsuario_BD (Usuario user) {
-        String query = "INSERT INTO USUARIO (nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO usuario (nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexion.getConexion();
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -77,15 +77,73 @@ public class OperacionesBD_usuario {
     }
     
     public static void delUsuario (String username) {
+        String query = "DELETE FROM usuario WHERE nombreUsuario = ?";
         
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+    
+        // Se establece el valor a cada uno de los parámetro de la sentencia
+        preparedStatement.setString(1, username);
+        
+        // Ejecuta la consulta SQL
+        preparedStatement.executeUpdate();
+        System.out.println("Usuario eliminado correctamente.");
+           
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el usuario " + username + ": " + e.getMessage());
+        }
     }
 
-    /*
-     * ACCIONES QUE FALTAN: Eliminar usuario; cambiar contraseña, cambiar privilegios, etc 
-     *                                        (O que actualice todo el perfil automáticamente? -> 
-     *                                         en código solo se alteran los campos que se requieran, 
-     *                                         se altera la tabla entera??)
-     */
+    public static void changePass(String username, String oldPass, String newPass) {
+        String query = "UPDATE usuario SET contrasena = ? WHERE nombreUsuario = ? AND contrasena = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+    
+        // Se establece el valor a cada uno de los parámetro de la sentencia
+        preparedStatement.setString(1, newPass);
+        preparedStatement.setString(2, username);
+        preparedStatement.setString(3, oldPass);
+        
+        // Ejecuta la consulta SQL y almacena el nº de filas alteradas
+        int rows = preparedStatement.executeUpdate();
+        
+        if (rows > 0) {
+            System.out.println("Contraseña actualizada correctamente.");
+        } else {
+            System.out.println("No se pudo cambiar la contraseña. Verifique las credenciales introducidas.");
+        }
+           
+        } catch (SQLException e) {
+            System.err.println("Error al : " + e.getMessage());
+        }
+    }
+
+    public static void changePrivs(Usuario user) {
+        String query = "UPDATE usuario SET privilegios = ? WHERE nombreUsuario = ?";
+        
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+    
+        // Se establece el valor a cada uno de los parámetro de la sentencia
+        preparedStatement.setBoolean(1, !user.getPrivileges()); //Al negarlo pasa de false a true y viceversa??
+        preparedStatement.setString(2, user.getNombre());
+        
+        // Ejecuta la consulta SQL y almacena el nº de filas alteradas
+        int rows = preparedStatement.executeUpdate();
+        
+        if (rows > 0) {
+            System.out.println("Privilegios de usuario actualizados correctamente.");
+        } else {
+            System.out.println("No se pudieron cambiar los privilegios del usuario.");
+        }
+           
+        } catch (SQLException e) {
+            System.err.println("Error al : " + e.getMessage());
+        }
+    }
+
+    
 
 
 }
