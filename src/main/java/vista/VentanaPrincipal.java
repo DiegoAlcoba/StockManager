@@ -23,9 +23,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         //Imprime por pantalla el nombre del usuario admin que ya se encuentra en la base de datos
         //Significa que la conexión es correcta y devuelve los valores del usuario almacenado
-        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getUsername());
-        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getEmail());
-        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getPrivileges());
+        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getUsername());
+        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getEmail());
+        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getPrivileges());
         initComponents();
     }
 

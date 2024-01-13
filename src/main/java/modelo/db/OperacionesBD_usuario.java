@@ -14,7 +14,7 @@ import modelo.entidad.Usuario;
 public class OperacionesBD_usuario {
     
     //Insertar un nuevo usuario en la base de datos
-    public static void addUser_BD (Usuario user) {
+    public static void addUsuario_BD (Usuario user) {
         String query = "INSERT INTO USUARIO (nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexion.getConexion();
@@ -39,7 +39,7 @@ public class OperacionesBD_usuario {
     }
     
     //Recuperar un usuario de la base de datos
-    public static Usuario getUser_BD (String username) {
+    public static Usuario getUsuario_BD (String username) {
         String query = "SELECT * FROM usuario WHERE nombreUsuario = ?";
 
         try (Connection conn = Conexion.getConexion();
@@ -74,6 +74,10 @@ public class OperacionesBD_usuario {
 
             return null;
         }
+    }
+    
+    public static void delUsuario (String username) {
+        
     }
 
     /*
