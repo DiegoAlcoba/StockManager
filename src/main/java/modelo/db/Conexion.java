@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class Conexion {
 
     // Configuración de la conexión
-    private static final String URL = "jdbc:postgresql://localhost:5432/StockManager_DB";
+    private static final String URL = "jdbc:postgresql://localhost:5432/StockManager_BD";
     private static final String USUARIO = "postgres";
     private static final String CONTRASENA = "1234";
 

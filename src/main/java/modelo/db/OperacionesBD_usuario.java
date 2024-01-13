@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import modelo.entidad.Producto;
 import modelo.entidad.Usuario;
 
 /**
@@ -40,8 +39,8 @@ public class OperacionesBD_usuario {
     }
     
     //Recuperar un usuario de la base de datos
-    public static Usuario getUsuario_BD (String username) {
-        String query = "SELECT * FROM usuario WHERE username = ?";
+    public static Usuario getUser_BD (String username) {
+        String query = "SELECT * FROM usuario WHERE nombreUsuario = ?";
 
         try (Connection conn = Conexion.getConexion();
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {

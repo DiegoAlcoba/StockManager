@@ -20,9 +20,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
-        Conexion.getConexion();
-        Usuario test = new Usuario("migueli", "limon", true, "miguel", 44, "miguel@gmail.com", 640745903);
-        OperacionesBD_usuario.addUser_BD(test);
+        
+        //Imprime por pantalla el nombre del usuario admin que ya se encuentra en la base de datos
+        //Significa que la conexión es correcta y devuelve los valores del usuario almacenado
+        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getUsername());
+        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getEmail());
+        System.out.println(OperacionesBD_usuario.getUser_BD("admin").getPrivileges());
         initComponents();
     }
 
@@ -162,11 +165,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        
-        //**PRESCINDIBLE** para depuración - app se conecta a la BD correctamente al iniciar
-        Connection con = Conexion.getConexion();
-        //Desconexión de la BD
-        Conexion.closeConexion(con);
 
        
     }
