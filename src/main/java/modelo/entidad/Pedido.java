@@ -18,7 +18,7 @@ public class Pedido {
         this.fecha = new Date(System.currentTimeMillis());
         this.distribuidor = distribuidor;
         this.productos = new ArrayList<>();
-        this.precioTotal = 0;
+        this.precioTotal = new BigDecimal(0);
     }
 
     public Date getFecha(){
