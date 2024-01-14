@@ -7,12 +7,21 @@ import java.util.List;
 import modelo.entidad.Producto;
 
 public class Pedido {
-    private int pedidoId;
+    private int pedidoId; //Como en el usuario, el id se asigna automáticamente al añadirse a la base de datos
+    /*
+     * Falta el id del usuario que ha hecho el pedido
+     */
     private Date fecha;
     private BigDecimal precioTotal;
     private List<Producto> productos;
     private Distribuidor distribuidor;
 
+    /*
+     * Recibe como parámetro un distribuidor? 
+     * 
+     * Al crearse un pedido recibe los parámetros de arriba,
+     * del distribuidor solo tiene su ID igual que el ID del usuario
+     */
     public Pedido(Distribuidor distribuidor){
         //TODO: generar una id de pedido
         this.fecha = new Date(System.currentTimeMillis());

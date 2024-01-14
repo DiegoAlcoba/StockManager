@@ -13,7 +13,7 @@ import modelo.entidad.Producto;
  */
 public class OperacionesBD_producto {
 
-    // Método para insertar un nuevo producto en la BD
+    /* Inserta un nuevo producto en la base de datos */
     public static void addProducto_BD (Producto prod) {
         String query = "INSERT INTO producto (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
 
@@ -39,7 +39,7 @@ public class OperacionesBD_producto {
         }
     }
     
-    //Obtener el producto con el nombre especificado de la BD
+    /* Devuelve un producto de la base de datos */
     public static Producto getProducto_BD (String nombreProd) {
         String query = "SELECT * FROM producto WHERE nombreProd = ?";
 
@@ -73,7 +73,7 @@ public class OperacionesBD_producto {
         }
     }
     
-    //Actualizar cantidad de un producto de la BD
+    /* Actualiza la cantidad de un producto de la base de datos */
     public static void newCantidad_BD (String nombreProd, int nCant) {
         String query = "UPDATE producto  SET cantidad = ? WHERE nombreProd = ?";
         
@@ -92,7 +92,7 @@ public class OperacionesBD_producto {
         }
     }
     
-    //Eliminar producto de la BD
+    /* Elimina un producto de la base de datos */
     public static void delProducto_BD (String nombreProd) {
         String query = "DELETE FROM producto WHERE nombreProd = ?";
         
