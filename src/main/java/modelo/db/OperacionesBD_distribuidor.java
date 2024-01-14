@@ -94,7 +94,7 @@ public class OperacionesBD_distribuidor {
     }
 
     /* Devuelve un vector con los distribuidores almacenados en la base de datos */
-    public Distribuidor[] getListaDistribuidores_BD() {
+    public static Distribuidor[] getListaDistribuidores_BD() {
         int totalDists = nDistribuidores();
 
         Distribuidor[] distribuidores = new Distribuidor[totalDists];
@@ -105,7 +105,7 @@ public class OperacionesBD_distribuidor {
          PreparedStatement preparedStatement = conn.prepareStatement(query);
          ResultSet resultSet = preparedStatement.executeQuery()) {
             
-            int i = -1;
+            int i = 0;
 
             while (resultSet.next()) {
                 Distribuidor distrib = new Distribuidor();
@@ -126,7 +126,7 @@ public class OperacionesBD_distribuidor {
     }
 
     //Método que devuelve el número de distribuidores totales en la BD
-    private int nDistribuidores() {
+    private static int nDistribuidores() {
         int cantidad = 0;
 
         String query = "SELECT COUNT(*) AS cantidad FROM distribuidor";
