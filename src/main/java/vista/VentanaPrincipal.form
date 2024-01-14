@@ -33,7 +33,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="userLabel">
+    <Component class="JLabel" name="userLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Usuario"/>
       </Properties>
@@ -43,7 +43,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JTextField" name="user">
+    <Component class="JTextField" name="user">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[100, 22]"/>
@@ -58,7 +58,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="passLabel">
+    <Component class="JLabel" name="passLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
@@ -68,7 +68,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="acceder">
+    <Component class="JButton" name="acceder">
       <Properties>
         <Property name="text" type="java.lang.String" value="Acceder"/>
       </Properties>
@@ -81,7 +81,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="pass">
+    <Component class="JPasswordField" name="pass">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[100, 22]"/>
