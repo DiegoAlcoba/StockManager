@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.postgresql.jdbc.ResourceLock;
+
 import modelo.entidad.Distribuidor;
 
 /**
@@ -49,6 +53,7 @@ public class OperacionesBD_distribuidor {
 
                 if (resultSet.next()) {
                     Distribuidor distrib = new Distribuidor();
+                    
                     distrib.setId(resultSet.getString("distribId"));
                     distrib.setNombre(resultSet.getString("nombreDist"));
                     distrib.setMail(resultSet.getString("emailDist"));
@@ -87,5 +92,60 @@ public class OperacionesBD_distribuidor {
             System.err.println("Error al eliminar el distribuidor de la base de datos: " + e.getMessage());
         }
     }
+
+    /* Devuelve un vector con los distribuidores almacenados en la base de datos */
+    public Distribuidor[] getListaDistribuidores_BD() {
+        int totalDists = nDistribuidores();
+
+        Distribuidor[] distribuidores = new Distribuidor[totalDists];
+
+        String query = "SELECT * FROM distribuidor";
+                
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+            
+            int i = -1;
+
+            while (resultSet.next()) {
+                Distribuidor distrib = new Distribuidor();
+                
+                distrib.setId(resultSet.getString("distribId"));
+                distrib.setNombre(resultSet.getString("nombreDist"));
+                distrib.setMail(resultSet.getString("emailDist"));
+                distrib.setTlfn(resultSet.getInt("distTelf"));
+
+                distribuidores[i++] = distrib;
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener los distribuidores: " + e.getMessage());
+        }
+
+        return distribuidores;
+    }
+
+    //Método que devuelve el número de distribuidores totales en la BD
+    private int nDistribuidores() {
+        int cantidad = 0;
+
+        String query = "SELECT COUNT(*) AS cantidad FROM distribuidor";
+
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet countResultSet = preparedStatement.executeQuery()) {
+            
+            if (countResultSet.next()) {
+                cantidad = countResultSet.getInt("cantidad");
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener la cantidad de distribuidores: " + e.getMessage());
+        }
+
+        return cantidad;
+    }
+
+
 
 }
