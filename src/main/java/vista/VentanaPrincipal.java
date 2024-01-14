@@ -4,17 +4,19 @@
  */
 package vista;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import modelo.db.Conexion;
+import modelo.db.OperacionesBD_distribuidor;
 import modelo.db.OperacionesBD_producto;
 import modelo.db.OperacionesBD_usuario;
 import modelo.entidad.*;
+import javax.swing.table.DefaultTableModel;
 
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends JFrame {
 
     /**
      * Creates new form VentanaPrincipal
@@ -32,28 +34,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel1 = new javax.swing.JLabel();
-        log = new javax.swing.JPanel();
-        pass = new javax.swing.JPasswordField();
-        acceder = new javax.swing.JButton();
-        passLabel = new javax.swing.JLabel();
-        user = new javax.swing.JTextField();
-        userLabel = new javax.swing.JLabel();
-        menu = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jLabel1 = new JLabel();
+        log = new JPanel();
+        pass = new JPasswordField();
+        acceder = new JButton();
+        passLabel = new JLabel();
+        user = new JTextField();
+        userLabel = new JLabel();
+        menu = new JPanel();
+        jButton1 = new JButton();
+        distButton = new JButton();
+        jButton3 = new JButton();
+        jButton4 = new JButton();
+        jButton5 = new JButton();
+        distPanel = new JPanel();
+        distTable = new JTable();
+        addDist = new JButton();
+        grid = new GridBagConstraints();
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("StockManager");
         setBackground(new java.awt.Color(3, 132, 186));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        log.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        log.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         log.setLayout(new java.awt.GridBagLayout());
 
         pass.setPreferredSize(new java.awt.Dimension(100, 22));
@@ -111,10 +117,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jButton1.setText("Productos");
 
-        jButton2.setText("Distribuidores");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        distButton.setText("Distribuidores");
+        distButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                distButtonActionPerformed(evt);
             }
         });
 
@@ -129,39 +135,58 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jButton5.setText("Hacer pedido");
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
+        GroupLayout menuLayout = new GroupLayout(menu);
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(menuLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(distButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jButton5))
                 .addGap(26, 26, 26)
                 .addComponent(jButton4)
                 .addContainerGap(266, Short.MAX_VALUE))
         );
         menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
+            menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
                 .addContainerGap(59, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(distButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         menu.setVisible(false);
         getContentPane().add(menu, java.awt.BorderLayout.PAGE_START);
+
+        distPanel.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        distPanel.setLayout(new GridBagLayout());
+        distTable.setPreferredSize(new Dimension(300, 200));
+        grid.gridx = 0;
+        grid.gridy = 0;
+        distPanel.add(distTable, grid);
+        model = new DefaultTableModel();
+        addDist.setText("Añadir distribuidor");
+        addDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDistActionPerformed(evt);
+            }
+        });
+        grid.gridy = 1;
+        distPanel.add(addDist, grid);
+        distPanel.setVisible(false);
+
+
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -196,10 +221,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_accederActionPerformed
+    private void addDistActionPerformed(java.awt.event.ActionEvent evt){
+        JPanel ingresaDist = new JPanel();
+        ingresaDist.setLayout(new BoxLayout(ingresaDist, BoxLayout.Y_AXIS)); // Establecer el layout a BoxLayout
+        ingresaDist.setPreferredSize(new Dimension(300, 200)); // Establecer el tamaño preferido del panel
+        JTextField id = new JTextField();
+        JTextField nombre = new JTextField();
+        JTextField mail = new JTextField();
+        JTextField tlfn = new JTextField();
+        ingresaDist.add(new JLabel("NIF:"));
+        ingresaDist.add(id);
+        ingresaDist.add(new JLabel("Nombre:"));
+        ingresaDist.add(nombre);
+        ingresaDist.add(new JLabel("Email:"));
+        ingresaDist.add(mail);
+        ingresaDist.add(new JLabel("Teléfono:"));
+        ingresaDist.add(tlfn);
+        int result = JOptionPane.showConfirmDialog(null, ingresaDist, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION){
+            Distribuidor distribuidor = new Distribuidor(id.getText(), nombre.getText(), mail.getText(), Integer.parseInt(tlfn.getText()));
+            OperacionesBD_distribuidor.addDistrib_BD(distribuidor);
+            model.addRow(new Object[]{distribuidor.getId(), distribuidor.getNombre(), distribuidor.getMail(), distribuidor.getTlfn()});
+        }
+    }
+    private void distButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distButtonActionPerformed
+        Distribuidor[] distribuidores = OperacionesBD_distribuidor.getDistribuidores_BD();
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Email");
+        model.addColumn("Teléfono");
+        for(int i = 0; i < distribuidores.length; i++){
+            model.addRow(new Object[]{distribuidores[i].getId(), distribuidores[i].getNombre(), distribuidores[i].getMail(), distribuidores[i].getTlfn()});
+        }
+        distTable.setModel(model);
+        menu.setVisible(false);  
+        distPanel.setVisible(true);
+        add(distPanel);
+        
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_distButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -215,9 +276,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
@@ -227,7 +288,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -249,18 +310,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton acceder;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel log;
-    private javax.swing.JPanel menu;
-    private javax.swing.JPasswordField pass;
-    private javax.swing.JLabel passLabel;
-    private javax.swing.JTextField user;
-    private javax.swing.JLabel userLabel;
+    private JButton acceder;
+    private JButton jButton1;
+    private JButton distButton;
+    private JButton jButton3;
+    private JButton jButton4;
+    private JButton jButton5;
+    private JButton addDist;
+    private JLabel jLabel1;
+    private JPanel log;
+    private JPanel menu;
+    private JPanel distPanel;
+    private JTable distTable;
+    private JPasswordField pass;
+    private JLabel passLabel;
+    private JTextField user;
+    private JLabel userLabel;
+    private DefaultTableModel model;
+    private GridBagConstraints grid;
     // End of variables declaration//GEN-END:variables
 }

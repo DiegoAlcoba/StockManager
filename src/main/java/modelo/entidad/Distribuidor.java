@@ -26,7 +26,6 @@ public class Distribuidor {
         this.tlfn = telef;
         this.productos = productos;
     }
-
     public Distribuidor() {
         //TODO Auto-generated constructor stub
     }
