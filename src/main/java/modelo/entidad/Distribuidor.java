@@ -19,6 +19,14 @@ public class Distribuidor {
         this.productos = new ArrayList<>();
     }
 
+    public Distribuidor(String id, String name, String mail, int telef, List<Producto> productos){
+        this.distribId = id;
+        this.nombre = name;
+        this.mail = mail;
+        this.tlfn = telef;
+        this.productos = productos;
+    }
+
     public Distribuidor() {
         //TODO Auto-generated constructor stub
     }

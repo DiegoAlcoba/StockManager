@@ -11,23 +11,19 @@ public class Pedido {
     /*
      * Falta el id del usuario que ha hecho el pedido
      */
+    private int usuarioId;
     private Date fecha;
     private BigDecimal precioTotal;
     private List<Producto> productos;
-    private Distribuidor distribuidor;
+    private int distribuidorId;
 
-    /*
-     * Recibe como parámetro un distribuidor? 
-     * 
-     * Al crearse un pedido recibe los parámetros de arriba,
-     * del distribuidor solo tiene su ID igual que el ID del usuario
-     */
-    public Pedido(Distribuidor distribuidor){
-        //TODO: generar una id de pedido
-        this.fecha = new Date(System.currentTimeMillis());
-        this.distribuidor = distribuidor;
-        this.productos = new ArrayList<>();
-        this.precioTotal = new BigDecimal(0);
+    public Pedido(int pedidoId, int usuarioId, Date fecha, BigDecimal precioTotal, List<Producto> productos, int distribuidorId){
+        this.pedidoId = pedidoId;
+        this.usuarioId = usuarioId;
+        this.fecha = fecha;
+        this.precioTotal = precioTotal;
+        this.productos = productos;
+        this.distribuidorId = distribuidorId;
     }
 
     public Date getFecha(){
@@ -42,8 +38,8 @@ public class Pedido {
         return this.productos;
     }
 
-    public Distribuidor getDistribuidor(){
-        return this.distribuidor;
+    public int getDistribuidor(){
+        return this.distribuidorId;
     }
     
     public int getPedidoId(){
