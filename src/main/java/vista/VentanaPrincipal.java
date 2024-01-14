@@ -20,12 +20,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
-        
-        //Imprime por pantalla el nombre del usuario admin que ya se encuentra en la base de datos
-        //Significa que la conexión es correcta y devuelve los valores del usuario almacenado
-        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getUsername());
-        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getEmail());
-        System.out.println(OperacionesBD_usuario.getUsuario_BD("admin").getPrivileges());
         initComponents();
     }
 
@@ -38,26 +32,60 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        userLabel = new javax.swing.JLabel();
-        user = new javax.swing.JTextField();
-        passLabel = new javax.swing.JLabel();
-        acceder = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        log = new javax.swing.JPanel();
         pass = new javax.swing.JPasswordField();
+        acceder = new javax.swing.JButton();
+        passLabel = new javax.swing.JLabel();
+        user = new javax.swing.JTextField();
+        userLabel = new javax.swing.JLabel();
+        menu = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StockManager");
         setBackground(new java.awt.Color(3, 132, 186));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(500, 400));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        userLabel.setText("Usuario");
+        log.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        log.setLayout(new java.awt.GridBagLayout());
+
+        pass.setPreferredSize(new java.awt.Dimension(100, 22));
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        log.add(pass, gridBagConstraints);
+
+        acceder.setText("Acceder");
+        acceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accederActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(userLabel, gridBagConstraints);
+        log.add(acceder, gridBagConstraints);
+        
+
+        passLabel.setText("Contraseña");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        log.add(passLabel, gridBagConstraints);
 
         user.setPreferredSize(new java.awt.Dimension(100, 22));
         user.addActionListener(new java.awt.event.ActionListener() {
@@ -67,42 +95,79 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(user, gridBagConstraints);
-
-        passLabel.setText("Contraseña");
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(passLabel, gridBagConstraints);
+        log.add(user, gridBagConstraints);
 
-        acceder.setText("Acceder");
-        acceder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accederActionPerformed(evt);
-            }
-        });
+        userLabel.setText("Usuario");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(acceder, gridBagConstraints);
+        log.add(userLabel, gridBagConstraints);
 
-        pass.setPreferredSize(new java.awt.Dimension(100, 22));
-        pass.addActionListener(new java.awt.event.ActionListener() {
+        getContentPane().add(log, java.awt.BorderLayout.CENTER);
+
+        jButton1.setText("Productos");
+
+        jButton2.setText("Distribuidores");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        getContentPane().add(pass, gridBagConstraints);
+
+        jButton3.setText("Usuarios");
+
+        jButton4.setText("Ver pedidos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Hacer pedido");
+
+        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
+        menu.setLayout(menuLayout);
+        menuLayout.setHorizontalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton5))
+                .addGap(26, 26, 26)
+                .addComponent(jButton4)
+                .addContainerGap(266, Short.MAX_VALUE))
+        );
+        menuLayout.setVerticalGroup(
+            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
+                .addContainerGap(59, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        menu.setVisible(false);
+        getContentPane().add(menu, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
-                // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_userActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
@@ -119,7 +184,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             if(OperacionesBD_usuario.getUsuario_BD(usuario) != null){
                 Usuario usuarioBD = OperacionesBD_usuario.getUsuario_BD(usuario);
                 if(usuarioBD.getPass().equals(String.valueOf(contra))){
-                    //TODO: abrir ventana de usuario
+                    menu.setVisible(true);
+                    log.setVisible(false);
                 }else{
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error de acceso", JOptionPane.ERROR_MESSAGE);
                 }
@@ -130,6 +196,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_accederActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,12 +239,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        
+        //**PRESCINDIBLE** para depuración - app se conecta a la BD correctamente al iniciar
+        Connection con = Conexion.getConexion();
+        //Desconexión de la BD
+        Conexion.closeConexion(con);
 
        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceder;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel log;
+    private javax.swing.JPanel menu;
     private javax.swing.JPasswordField pass;
     private javax.swing.JLabel passLabel;
     private javax.swing.JTextField user;
