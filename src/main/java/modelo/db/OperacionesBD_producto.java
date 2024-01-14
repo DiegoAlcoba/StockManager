@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import modelo.entidad.Distribuidor;
 import modelo.entidad.Producto;
 
 /**
@@ -110,7 +112,59 @@ public class OperacionesBD_producto {
         
     }
 
+/* Devuelve un vector con los productos almacenados en la base de datos */
+    public static Producto[] getListaProductos_BD() {
+        int totalProds = nProds();
 
+        Producto[] productos = new Producto[totalProds];
+
+        String query = "SELECT * FROM producto";
+                
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+            
+            int i = 0;
+
+            while (resultSet.next()) {
+                Producto prod = new Producto();
+                
+                prod.setName(resultSet.getString("nombreProd"));
+                prod.setDistribuidorId(resultSet.getInt("distribId"));
+                prod.setTipo(resultSet.getString("tipo"));
+                prod.setPrecio(resultSet.getBigDecimal("costeUnitario"));
+                prod.setCantidad(resultSet.getInt("cantidad"));
+
+                productos[i++] = prod;
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener los productos: " + e.getMessage());
+        }
+
+        return productos;
+    }
+
+    //Método que devuelve el número de productos totales en la BD
+    private static int nProds() {
+        int cantidad = 0;
+
+        String query = "SELECT COUNT(*) AS cantidad FROM producto";
+
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet countResultSet = preparedStatement.executeQuery()) {
+            
+            if (countResultSet.next()) {
+                cantidad = countResultSet.getInt("cantidad");
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener la cantidad de productos: " + e.getMessage());
+        }
+
+        return cantidad;
+    }
 
 
 }

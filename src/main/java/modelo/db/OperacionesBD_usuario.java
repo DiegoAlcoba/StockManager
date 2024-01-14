@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import modelo.entidad.Distribuidor;
 import modelo.entidad.Usuario;
 
 /**
@@ -145,7 +146,62 @@ public class OperacionesBD_usuario {
         }
     }
 
-    
+    /* Devuelve un vector con los usuarios almacenados en la base de datos */
+    public static Usuario[] getListaUsuarios_BD() {
+        int totalUsers = nUsuarios();
+
+        Usuario[] usuarios = new Usuario[totalUsers];
+
+        String query = "SELECT * FROM usuario";
+                
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+            
+            int i = 0;
+
+            while (resultSet.next()) {
+                Usuario user = new Usuario();
+                    
+                user.setUserId(resultSet.getInt("userId"));
+                user.setUsername(resultSet.getString("nombreUsuario"));
+                user.setPass(resultSet.getString("contrasena"));
+                user.setPrivileges(resultSet.getBoolean("privilegios"));
+                user.setNombre(resultSet.getString("nombre"));
+                user.setSSId(resultSet.getInt("SSId"));
+                user.setEmail(resultSet.getString("email"));
+                user.setTlfn(resultSet.getInt("numTelefono"));
+
+                usuarios[i++] = user;
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener los usuarios: " + e.getMessage());
+        }
+
+        return usuarios;
+    }
+
+    //Método que devuelve el número de usuarios totales en la BD
+    private static int nUsuarios() {
+        int cantidad = 0;
+
+        String query = "SELECT COUNT(*) AS cantidad FROM usuario";
+
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query);
+         ResultSet countResultSet = preparedStatement.executeQuery()) {
+            
+            if (countResultSet.next()) {
+                cantidad = countResultSet.getInt("cantidad");
+            }
+        
+        } catch (SQLException e) {
+            System.err.println("Error al obtener la cantidad de usuarios: " + e.getMessage());
+        }
+
+        return cantidad;
+    }
 
 
 }
