@@ -8,7 +8,6 @@ public class Producto {
     private String tipo;
     private BigDecimal coste;
     private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
-    
     public Producto() {
         //Sobrecarga de productores, necesario para cuando se desea crear un objeto sin valores iniciales, se asignan después con el constructor de debajo
     }
