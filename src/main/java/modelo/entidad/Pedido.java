@@ -7,16 +7,27 @@ import java.util.List;
 import modelo.entidad.Producto;
 
 public class Pedido {
-    private int pedidoId; //Como en el usuario, el id se asigna automáticamente al añadirse a la base de datos
-    /*
-     * Falta el id del usuario que ha hecho el pedido
-     */
+    private int pedidoId; //Autogenerado en la base de datos    
     private int usuarioId;
     private Date fecha;
     private BigDecimal precioTotal;
     private List<Producto> productos;
     private int distribuidorId;
 
+    /* Constructor vacío para crear un objeto Pedido sin valores */
+    public Pedido() {
+    
+    }
+
+    /* Constructor para crear un Pedido en código antes de guardarlo en la BD */
+    public Pedido (int usuarioId, Date fecha, BigDecimal precioTotal,int distribuidorId) {
+        this.usuarioId = usuarioId;
+        this.fecha = fecha;
+        this.precioTotal = precioTotal;
+        this.distribuidorId = distribuidorId;
+    }
+
+    /* Constructor utilizado al recuperar un pedido de la BD */
     public Pedido(int pedidoId, int usuarioId, Date fecha, BigDecimal precioTotal, List<Producto> productos, int distribuidorId){
         this.pedidoId = pedidoId;
         this.usuarioId = usuarioId;

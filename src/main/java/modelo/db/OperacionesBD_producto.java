@@ -25,7 +25,7 @@ public class OperacionesBD_producto {
 
             // Se establece el valor a cada uno de los parámetro de la sentencia
             preparedStatement.setString(1, prod.getName());
-            preparedStatement.setInt(2, prod.getDistribId());
+            preparedStatement.setString(2, prod.getDistribId());
             preparedStatement.setString(3, prod.getTipo());
             preparedStatement.setInt(4, prod.getCantidad());
             preparedStatement.setBigDecimal(5, prod.getPrecio());

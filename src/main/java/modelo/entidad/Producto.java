@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Producto {
     private String nombre;
-    private int distribId;
+    private String distribId;
     private String tipo;
     private BigDecimal coste;
     private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
