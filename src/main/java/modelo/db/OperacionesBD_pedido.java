@@ -21,7 +21,7 @@ public class OperacionesBD_pedido {
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             
             // Se establece el valor a cada uno de los parámetro de la sentencia
-            preparedStatement.setInt(1, pedido.getUsuarioId()); // Falta implementación en constructor
+            preparedStatement.setInt(1, pedido.getUserId()); // Falta implementación en constructor
             preparedStatement.setDate(2, pedido.getFecha());
             preparedStatement.setBigDecimal(3, pedido.getPrecioTotal());
             preparedStatement.setInt(4, pedido.getDistribuidor());
