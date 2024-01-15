@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 import modelo.entidad.Pedido;
 
+/**
+ *
+ * @author diego
+ */
 public class DetallesPedido {
     private int nDetallePedido; //Autogenerado en la BD
     private int idPedido;
