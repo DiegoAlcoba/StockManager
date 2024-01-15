@@ -16,7 +16,7 @@ import modelo.entidad.Producto;
 public class OperacionesBD_producto {
 
     /* Inserta un nuevo producto en la base de datos */
-    public static void addProducto_BD (Producto prod) {
+    public static boolean addProducto_BD (Producto prod) {
         String query = "INSERT INTO producto (nombreProd, distribId, tipo, cantidad, costeUnitario) VALUES (?, ?, ?, ?, ?)";
 
         //Se realiza la conexión a la BD y se prepara la sentencia SQL para la consulta
@@ -34,11 +34,15 @@ public class OperacionesBD_producto {
             preparedStatement.executeUpdate();  //Sentencia que modifica la base de datos
 
             System.out.println("Producto añadido correctamente.");
+
+            return true;
             
         //Si se ejecuta el try cierra la conexión automáticamente al finalizar la consulta
         } catch (SQLException e) {
             System.err.println("Error al insertar producto: " + e.getMessage());
         }
+
+        return false;
     }
     
     /* Devuelve un producto de la base de datos */
@@ -105,11 +109,14 @@ public class OperacionesBD_producto {
             preparedStatement.executeUpdate();
 
             System.out.println("Producto eliminado correctamente");
+
+            return true;
               
         } catch (SQLException e) {
             System.err.println("Error al eliminar el producto: " + e.getMessage());
         }
         
+        return false;
     }
 
 /* Devuelve un vector con los productos almacenados en la base de datos */

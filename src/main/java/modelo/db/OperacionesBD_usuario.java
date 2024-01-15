@@ -15,7 +15,7 @@ import modelo.entidad.Usuario;
 public class OperacionesBD_usuario {
     
     /*Inserta un nuevo usuario en la base de datos*/
-    public static void addUsuario_BD (Usuario user) {
+    public static boolean addUsuario_BD (Usuario user) {
         String query = "INSERT INTO usuario (nombreUsuario, contrasena, privilegios, nombre, SSId, email, numTelefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexion.getConexion();
@@ -33,10 +33,14 @@ public class OperacionesBD_usuario {
         // Ejecuta la consulta SQL
         preparedStatement.executeUpdate();
         System.out.println("Usuario añadido correctamente.");
+
+        return true;
            
         } catch (SQLException e) {
             System.err.println("Error al añadir el usuario: " + e.getMessage());
         }
+
+        return false;
     }
     
     /*Devuelve un usuario de la base de datos*/
@@ -77,7 +81,7 @@ public class OperacionesBD_usuario {
     }
     
     /* Elimina un usuario de la base de datos */
-    public static void delUsuario_BD (String username) {
+    public static boolean delUsuario_BD (String username) {
         String query = "DELETE FROM usuario WHERE nombreUsuario = ?";
         
         try (Connection conn = Conexion.getConexion();
@@ -89,10 +93,14 @@ public class OperacionesBD_usuario {
             // Ejecuta la consulta SQL
             preparedStatement.executeUpdate();
             System.out.println("Usuario eliminado correctamente.");
+
+            return true;
             
         } catch (SQLException e) {
             System.err.println("Error al eliminar el usuario " + username + ": " + e.getMessage());
         }
+
+        return false;
     }
 
     /* Cambia la contraseña del usuario recibido por parámetro */

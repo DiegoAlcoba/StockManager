@@ -12,7 +12,7 @@ public class Pedido {
     private Date fecha;
     private BigDecimal precioTotal;
     private List<Producto> productos;
-    private int distribuidorId;
+    private String distribuidorId;
 
     /* Constructor vacío para crear un objeto Pedido sin valores */
     public Pedido() {
@@ -20,7 +20,7 @@ public class Pedido {
     }
 
     /* Constructor para crear un Pedido en código antes de guardarlo en la BD */
-    public Pedido (int usuarioId, Date fecha, BigDecimal precioTotal,int distribuidorId) {
+    public Pedido (int usuarioId, Date fecha, BigDecimal precioTotal, String distribuidorId) {
         this.usuarioId = usuarioId;
         this.fecha = fecha;
         this.precioTotal = precioTotal;
@@ -28,12 +28,16 @@ public class Pedido {
     }
 
     /* Constructor utilizado al recuperar un pedido de la BD */
-    public Pedido(int pedidoId, int usuarioId, Date fecha, BigDecimal precioTotal, List<Producto> productos, int distribuidorId){
+
+    /*
+     * Al recuperar no se recuperan los productos del pedido, solo los detalles del pedido
+     * List<Producto> productos
+     */
+    public Pedido(int pedidoId, int usuarioId, Date fecha, BigDecimal precioTotal, String distribuidorId){
         this.pedidoId = pedidoId;
         this.usuarioId = usuarioId;
         this.fecha = fecha;
         this.precioTotal = precioTotal;
-        this.productos = productos;
         this.distribuidorId = distribuidorId;
     }
 
@@ -49,7 +53,7 @@ public class Pedido {
         return this.productos;
     }
 
-    public int getDistribuidor(){
+    public String getDistribuidor(){
         return this.distribuidorId;
     }
     
@@ -73,7 +77,7 @@ public class Pedido {
         this.productos = productos;
     }
 
-    public void setDistribuidor(int distribuidorId){
+    public void setDistribuidor(String distribuidorId){
         this.distribuidorId = distribuidorId;
     }
 

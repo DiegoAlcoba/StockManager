@@ -18,7 +18,7 @@ import modelo.entidad.Distribuidor;
 public class OperacionesBD_distribuidor {
     
     /* Inserta un nuevo distribuidor en la base de datos */
-    public static void addDistrib_BD (Distribuidor distrib) {
+    public static boolean addDistrib_BD (Distribuidor distrib) {
         String query = "INSERT INTO distribuidor (distribId, nombreDist, emailDist, distTelf) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = Conexion.getConexion();
@@ -33,10 +33,14 @@ public class OperacionesBD_distribuidor {
             // Ejecuta la consulta SQL
             preparedStatement.executeUpdate();
             System.out.println("Distribuidor añadido correctamente.");
+
+            return true;
         
         } catch (SQLException e) {
             System.err.println("Error al añadir el distribuidor: " + e.getMessage());
         }
+
+        return false;
     }
 
     /* Devuelve un distribuidor de la base de datos */
@@ -75,7 +79,7 @@ public class OperacionesBD_distribuidor {
     }
 
     /* Elimina un distribuidor de la base de datos */
-    public static void delDistribuidor_BD (String name) {
+    public static boolean delDistribuidor_BD (String name) {
         String query = "DELETE FROM distribuidor WHERE nombreDist = ?";
                 
         try (Connection conn = Conexion.getConexion();
@@ -87,10 +91,13 @@ public class OperacionesBD_distribuidor {
             // Ejecuta la consulta SQL
             preparedStatement.executeUpdate();
             System.out.println("Distribuidor eliminado correctamente.");
-        
+
+            return true;
         } catch (SQLException e) {
             System.err.println("Error al eliminar el distribuidor de la base de datos: " + e.getMessage());
         }
+        
+        return false;
     }
 
     /* Devuelve un vector con los distribuidores almacenados en la base de datos */
