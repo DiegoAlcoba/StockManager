@@ -99,7 +99,7 @@ public class OperacionesBD_producto {
     }
     
     /* Elimina un producto de la base de datos */
-    public static void delProducto_BD (String nombreProd) {
+    public static boolean delProducto_BD (String nombreProd) {
         String query = "DELETE FROM producto WHERE nombreProd = ?";
         
         try (Connection conn = Conexion.getConexion();
