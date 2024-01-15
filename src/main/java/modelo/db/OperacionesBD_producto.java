@@ -144,12 +144,14 @@ public class OperacionesBD_producto {
 
                 productos[i++] = prod;
             }
+
+            return productos;
         
         } catch (SQLException e) {
             System.err.println("Error al obtener los productos: " + e.getMessage());
         }
 
-        return productos;
+        return null;
     }
 
     //Método que devuelve el número de productos totales en la BD

@@ -124,12 +124,14 @@ public class OperacionesBD_distribuidor {
 
                 distribuidores[i++] = distrib;
             }
+
+            return distribuidores;
         
         } catch (SQLException e) {
             System.err.println("Error al obtener los distribuidores: " + e.getMessage());
         }
 
-        return distribuidores;
+        return null;
     }
 
     //Método que devuelve el número de distribuidores totales en la BD

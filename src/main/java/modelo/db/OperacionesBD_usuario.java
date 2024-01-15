@@ -182,12 +182,14 @@ public class OperacionesBD_usuario {
 
                 usuarios[i++] = user;
             }
+
+            return usuarios;
         
         } catch (SQLException e) {
             System.err.println("Error al obtener los usuarios: " + e.getMessage());
         }
 
-        return usuarios;
+        return null;
     }
 
     //Método que devuelve el número de usuarios totales en la BD
