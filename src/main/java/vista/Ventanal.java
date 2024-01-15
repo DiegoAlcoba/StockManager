@@ -76,6 +76,7 @@ public class Ventanal extends javax.swing.JFrame {
         productosButton = new javax.swing.JButton();
         contabilidadButton = new javax.swing.JButton();
         distribuidoresButton = new javax.swing.JButton();
+        usuariosButton = new javax.swing.JButton();
         pedidosPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pedidosTable = new javax.swing.JTable();
@@ -141,13 +142,11 @@ public class Ventanal extends javax.swing.JFrame {
         loggin.add(passField, gridBagConstraints);
 
         access.setText("Acceder");
-        
         access.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 accessActionPerformed(evt);
             }
         });
-        getRootPane().setDefaultButton(access);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -161,21 +160,23 @@ public class Ventanal extends javax.swing.JFrame {
         menuAdmin.setLayout(new java.awt.GridBagLayout());
 
         pedidosButton.setText("Pedidos");
+        pedidosButton.setMaximumSize(new java.awt.Dimension(99, 23));
+        pedidosButton.setMinimumSize(new java.awt.Dimension(99, 23));
+        pedidosButton.setPreferredSize(new java.awt.Dimension(109, 23));
         pedidosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pedidosButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 32;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 6;
         gridBagConstraints.ipady = 38;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(102, 6, 0, 490);
+        gridBagConstraints.insets = new java.awt.Insets(5, 6, 6, 490);
         menuAdmin.add(pedidosButton, gridBagConstraints);
 
         productosButton.setText("Productos");
+        productosButton.setPreferredSize(new java.awt.Dimension(94, 23));
         productosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 productosButtonActionPerformed(evt);
@@ -187,10 +188,11 @@ public class Ventanal extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 21;
         gridBagConstraints.ipady = 38;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 490);
+        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 490);
         menuAdmin.add(productosButton, gridBagConstraints);
 
         contabilidadButton.setText("Contabilidad");
+        contabilidadButton.setPreferredSize(new java.awt.Dimension(109, 23));
         contabilidadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contabilidadButtonActionPerformed(evt);
@@ -202,10 +204,11 @@ public class Ventanal extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 38;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 6, 490);
+        gridBagConstraints.insets = new java.awt.Insets(12, 6, 6, 490);
         menuAdmin.add(contabilidadButton, gridBagConstraints);
 
         distribuidoresButton.setText("Distribuidores");
+        distribuidoresButton.setPreferredSize(new java.awt.Dimension(115, 23));
         distribuidoresButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 distribuidoresButtonActionPerformed(evt);
@@ -218,6 +221,24 @@ public class Ventanal extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 490);
         menuAdmin.add(distribuidoresButton, gridBagConstraints);
+
+        usuariosButton.setText("Usuarios");
+        usuariosButton.setMaximumSize(new java.awt.Dimension(83, 23));
+        usuariosButton.setMinimumSize(new java.awt.Dimension(83, 23));
+        usuariosButton.setPreferredSize(new java.awt.Dimension(83, 23));
+        usuariosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuariosButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 32;
+        gridBagConstraints.ipady = 38;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(102, 6, 0, 490);
+        menuAdmin.add(usuariosButton, gridBagConstraints);
 
         Contenedor.add(menuAdmin, "card3");
 
@@ -241,6 +262,11 @@ public class Ventanal extends javax.swing.JFrame {
         doPedido.setText("Hacer Pedido");
 
         atras.setText("Atras");
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pedidosPanelLayout = new javax.swing.GroupLayout(pedidosPanel);
         pedidosPanel.setLayout(pedidosPanelLayout);
@@ -292,6 +318,11 @@ public class Ventanal extends javax.swing.JFrame {
         });
 
         atras2.setText("Atras");
+        atras2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout productosPanelLayout = new javax.swing.GroupLayout(productosPanel);
         productosPanel.setLayout(productosPanelLayout);
@@ -316,7 +347,7 @@ public class Ventanal extends javax.swing.JFrame {
                 .addGroup(productosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras2)
                     .addComponent(addProducto))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
         Contenedor.add(productosPanel, "card5");
@@ -339,8 +370,18 @@ public class Ventanal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(distribuidoresTable);
 
         addDist.setText("Añadir Distribuidor");
+        addDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDistActionPerformed(evt);
+            }
+        });
 
         atras3.setText("Atras");
+        atras3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout distribuidoresPanelLayout = new javax.swing.GroupLayout(distribuidoresPanel);
         distribuidoresPanel.setLayout(distribuidoresPanelLayout);
@@ -349,21 +390,23 @@ public class Ventanal extends javax.swing.JFrame {
             .addGroup(distribuidoresPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(distribuidoresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, distribuidoresPanelLayout.createSequentialGroup()
+                    .addGroup(distribuidoresPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(distribuidoresPanelLayout.createSequentialGroup()
                         .addComponent(atras3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addDist)))
-                .addContainerGap())
+                        .addComponent(addDist))))
         );
         distribuidoresPanelLayout.setVerticalGroup(
             distribuidoresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(distribuidoresPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(distribuidoresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addDist)
-                    .addComponent(atras3)))
+                    .addComponent(atras3)
+                    .addComponent(addDist))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         Contenedor.add(distribuidoresPanel, "card6");
@@ -383,7 +426,7 @@ public class Ventanal extends javax.swing.JFrame {
         revalidate();
         repaint();
         pack();
-        setSize(840, 400);
+        setSize(840, 380);
     }//GEN-LAST:event_pedidosButtonActionPerformed
 
     private void accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessActionPerformed
@@ -415,6 +458,7 @@ public class Ventanal extends javax.swing.JFrame {
 
     private void productosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosButtonActionPerformed
         Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
+        dtmProducto.setRowCount(0);
         for(int i = 0; i < productos.length; i++){
             dtmProducto.addRow(new Object[]{productos[i].getName(), productos[i].getTipo(), productos[i].getDistribId(), productos[i].getPrecio()});
         }
@@ -427,7 +471,17 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_productosButtonActionPerformed
 
     private void distribuidoresButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distribuidoresButtonActionPerformed
-        // TODO add your handling code here:
+        Distribuidor[] distribuidores = OperacionesBD_distribuidor.getListaDistribuidores_BD();
+        dtmDistribuidor.setRowCount(0);
+        for(int i = 0; i < distribuidores.length; i++){
+            dtmDistribuidor.addRow(new Object[]{distribuidores[i].getId(), distribuidores[i].getNombre(), distribuidores[i].getMail(), distribuidores[i].getTlfn()});
+        }
+        distribuidoresPanel.setVisible(true);
+        menuAdmin.setVisible(false);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
     }//GEN-LAST:event_distribuidoresButtonActionPerformed
 
     private void contabilidadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contabilidadButtonActionPerformed
@@ -456,10 +510,67 @@ public class Ventanal extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, ingresaProd, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             Producto producto = new Producto(nombre.getText(), dist.getText(), type.getText(), new BigDecimal(precio.getText()), Integer.parseInt(cantidad.getText()));
+            //TODO: si addProducto_BD es false no añadir y mostrar panel de error
             OperacionesBD_producto.addProducto_BD(producto);
             dtmProducto.addRow(new Object[]{producto.getName(), producto.getTipo(), producto.getDistribId(), producto.getPrecio(), producto.getCantidad()});
         }
     }//GEN-LAST:event_addProductoActionPerformed
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        pedidosPanel.setVisible(false);
+        menuAdmin.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(400, 600);
+    }//GEN-LAST:event_atrasActionPerformed
+
+    private void atras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras2ActionPerformed
+        productosPanel.setVisible(false);
+        menuAdmin.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(400, 600);
+    }//GEN-LAST:event_atras2ActionPerformed
+
+    private void atras3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras3ActionPerformed
+        distribuidoresPanel.setVisible(false);
+        menuAdmin.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(400, 600);
+    }//GEN-LAST:event_atras3ActionPerformed
+
+    private void addDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDistActionPerformed
+        JPanel ingresaDist = new JPanel();
+        ingresaDist.setLayout(new BoxLayout(ingresaDist, BoxLayout.Y_AXIS)); // Establecer el layout a BoxLayout
+        ingresaDist.setPreferredSize(new Dimension(300, 250)); // Establecer el tamaño preferido del panel
+        JTextField nombre = new JTextField();
+        JTextField mail = new JTextField();
+        JTextField tlfn = new JTextField();
+        JTextField id = new JTextField();
+        ingresaDist.add(new JLabel("ID"));
+        ingresaDist.add(id);
+        ingresaDist.add(new JLabel("Nombre"));
+        ingresaDist.add(nombre);
+        ingresaDist.add(new JLabel("Mail"));
+        ingresaDist.add(mail);
+        ingresaDist.add(new JLabel("Telefono"));
+        ingresaDist.add(tlfn);
+        int result = JOptionPane.showConfirmDialog(null, ingresaDist, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION){
+            Distribuidor distribuidor = new Distribuidor(id.getText(), nombre.getText(), mail.getText(), Integer.parseInt(tlfn.getText()));
+            //TODO: si addDistrib_BD es false no añadir y mostrar panel de error
+            OperacionesBD_distribuidor.addDistrib_BD(distribuidor);
+            dtmDistribuidor.addRow(new Object[]{distribuidor.getId(), distribuidor.getNombre(), distribuidor.getMail(), distribuidor.getTlfn()});
+        }
+    }//GEN-LAST:event_addDistActionPerformed
+
+    private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usuariosButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,5 +639,6 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JPanel productosPanel;
     private javax.swing.JTable productosTable;
     private javax.swing.JTextField userText;
+    private javax.swing.JButton usuariosButton;
     // End of variables declaration//GEN-END:variables
 }
