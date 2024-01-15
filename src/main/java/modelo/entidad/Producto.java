@@ -8,12 +8,11 @@ public class Producto {
     private String tipo;
     private BigDecimal coste;
     private int cantidad; //Se entiende que es la cantidad actual - la que hay almacenada en la base de datos
-    
     public Producto() {
         //Sobrecarga de productores, necesario para cuando se desea crear un objeto sin valores iniciales, se asignan después con el constructor de debajo
     }
     
-    public Producto(String name, int distribId, String tipo, BigDecimal precio, int cant){
+    public Producto(String name, String distribId, String tipo, BigDecimal precio, int cant){
         if(precio.compareTo(BigDecimal.ZERO) < 0 || cant < 0){
             throw new IllegalArgumentException("El precio y la cantidad no pueden ser negativos");
         }
@@ -29,7 +28,7 @@ public class Producto {
         this.nombre = nombre;
     }
     
-    public void setDistribuidorId(int distribuidorID) {
+    public void setDistribuidorId(String distribuidorID) {
         this.distribId = distribuidorID;
     }
 
@@ -50,7 +49,7 @@ public class Producto {
         return this.nombre;
     }
     
-    public int getDistribId() {
+    public String getDistribId() {
         return this.distribId;
     }
 

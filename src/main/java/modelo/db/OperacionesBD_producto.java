@@ -55,7 +55,7 @@ public class OperacionesBD_producto {
                 if (resultSet.next()) {
                     Producto prod = new Producto();
                     prod.setName(resultSet.getString("nombreProd"));
-                    prod.setDistribuidorId(resultSet.getInt("distribId"));
+                    prod.setDistribuidorId(resultSet.getString("distribId"));
                     prod.setTipo(resultSet.getString("tipo"));
                     prod.setPrecio(resultSet.getBigDecimal("costeUnitario"));
                     prod.setCantidad(resultSet.getInt("cantidad"));
@@ -130,7 +130,7 @@ public class OperacionesBD_producto {
                 Producto prod = new Producto();
                 
                 prod.setName(resultSet.getString("nombreProd"));
-                prod.setDistribuidorId(resultSet.getInt("distribId"));
+                prod.setDistribuidorId(resultSet.getString("distribId"));
                 prod.setTipo(resultSet.getString("tipo"));
                 prod.setPrecio(resultSet.getBigDecimal("costeUnitario"));
                 prod.setCantidad(resultSet.getInt("cantidad"));

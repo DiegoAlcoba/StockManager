@@ -57,6 +57,34 @@ public class Pedido {
         return this.pedidoId;
     }
 
+    public int getUserId(){
+        return this.usuarioId;
+    }
+
+    public void setFecha(Date fecha){
+        this.fecha = fecha;
+    }
+
+    public void setPrecioTotal(BigDecimal precioTotal){
+        this.precioTotal = precioTotal;
+    }
+
+    public void setProductos(List<Producto> productos){
+        this.productos = productos;
+    }
+
+    public void setDistribuidor(int distribuidorId){
+        this.distribuidorId = distribuidorId;
+    }
+
+    public void setPedidoId(int pedidoId){
+        this.pedidoId = pedidoId;
+    }
+
+    public void setUserId(int usuarioId){
+        this.usuarioId = usuarioId;
+    }
+
     public boolean addProducto(Producto producto){
         if(!inLista(producto)){
             return false;
