@@ -1289,9 +1289,10 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
         
-        Connection con = Conexion.getConexion();
+        /* No es necesario */
+        //Connection con = Conexion.getConexion();
         //Desconexión de la BD
-        Conexion.closeConexion(con);
+        //Conexion.closeConexion(con);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
