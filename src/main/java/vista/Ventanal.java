@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import controlador.ControladorLoggin;
 import javafx.event.ActionEvent;
 import modelo.db.Conexion;
 import modelo.db.OperacionesBD_distribuidor;
@@ -820,31 +821,8 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_pedidosButtonActionPerformed
 
     private void accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessActionPerformed
-        if(userText.getText().isEmpty() || passField.getPassword().length == 0){
-            JOptionPane.showMessageDialog(null, "Rellena los campos para continuar", "Error de acceso", JOptionPane.ERROR_MESSAGE);
-        }else{
-            String usuario = userText.getText();
-            char[] contra = passField.getPassword();
-            if(OperacionesBD_usuario.getUsuario_BD(usuario) != null){
-                Usuario usuarioBD = OperacionesBD_usuario.getUsuario_BD(usuario);
-                if(usuarioBD.getPass().equals(String.valueOf(contra))){
-                    getRootPane().setDefaultButton(null);
-                    logger = usuarioBD;
-                    menuAdmin.setVisible(true);
-                    loggin.setVisible(false);
-                    revalidate();
-                    repaint();
-                    pack();
-                    setSize(400, 600);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error de acceso", JOptionPane.ERROR_MESSAGE);
-                }
-
-            }else{
-                JOptionPane.showMessageDialog(null, "El usuario no es correcto", "Error de acceso", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        }
+        ControladorLoggin cl = new ControladorLoggin();
+        logger = cl.acceso(userText, passField, loggin, menuAdmin);
     }//GEN-LAST:event_accessActionPerformed
 
     private void productosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosButtonActionPerformed
@@ -892,7 +870,7 @@ public class Ventanal extends javax.swing.JFrame {
         ingresaProd.add(nombre);
         ingresaProd.add(new JLabel("Tipo"));
         ingresaProd.add(type);
-        ingresaProd.add(new JLabel("Distribuidor"));
+        ingresaProd.add(new JLabel("Distribuidor(ID)"));
         ingresaProd.add(dist);
         ingresaProd.add(new JLabel("Precio"));
         ingresaProd.add(precio);
