@@ -24,7 +24,7 @@ public class OperacionesBD_usuario {
         // Se establece el valor a cada uno de los parámetro de la sentencia
         preparedStatement.setString(1, user.getUsername());
         preparedStatement.setString(2, user.getPass());
-        preparedStatement.setBoolean(3, user.getPrivileges());
+        preparedStatement.setInt(3, getPrivsInt(user.getPrivileges())); 
         preparedStatement.setString(4, user.getNombre());
         preparedStatement.setInt(5, user.getSSId());
         preparedStatement.setString(6, user.getEmail());
@@ -60,7 +60,7 @@ public class OperacionesBD_usuario {
                     user.setUserId(resultSet.getInt("userId"));
                     user.setUsername(resultSet.getString("nombreUsuario"));
                     user.setPass(resultSet.getString("contrasena"));
-                    user.setPrivileges(resultSet.getBoolean("privilegios"));
+                    user.setPrivileges(getPrivsBool(resultSet.getInt("privilegios")));
                     user.setNombre(resultSet.getString("nombre"));
                     user.setSSId(resultSet.getInt("SSId"));
                     user.setEmail(resultSet.getString("email"));
@@ -137,7 +137,7 @@ public class OperacionesBD_usuario {
          PreparedStatement preparedStatement = conn.prepareStatement(query)) {
     
             // Se establece el valor a cada uno de los parámetro de la sentencia
-            preparedStatement.setBoolean(1, !user.getPrivileges()); //Al negarlo pasa de false a true y viceversa??
+            preparedStatement.setInt(1, getPrivsInt(!user.getPrivileges())); //Al negarlo pasa de false a true y viceversa
             preparedStatement.setString(2, user.getNombre());
             
             // Ejecuta la consulta SQL y almacena el nº de filas alteradas
@@ -174,7 +174,7 @@ public class OperacionesBD_usuario {
                 user.setUserId(resultSet.getInt("userId"));
                 user.setUsername(resultSet.getString("nombreUsuario"));
                 user.setPass(resultSet.getString("contrasena"));
-                user.setPrivileges(resultSet.getBoolean("privilegios"));
+                user.setPrivileges(getPrivsBool(resultSet.getInt("privilegios")));
                 user.setNombre(resultSet.getString("nombre"));
                 user.setSSId(resultSet.getInt("SSId"));
                 user.setEmail(resultSet.getString("email"));
@@ -213,5 +213,24 @@ public class OperacionesBD_usuario {
         return cantidad;
     }
 
+    //Método para conversión de booleano a int para los privilegios del usuario
+    private static int getPrivsInt(boolean privs) {
+        if (privs) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    //Método para conversión de int a booleano para los privilegios del usuario
+    private static boolean getPrivsBool(int privs) {
+        if (privs == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 }
