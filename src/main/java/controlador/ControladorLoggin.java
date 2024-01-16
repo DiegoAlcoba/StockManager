@@ -28,10 +28,6 @@ public class ControladorLoggin extends JFrame {
                     Usuario logger = usuarioBD;
                     menu.setVisible(true);
                     log.setVisible(false);
-                    revalidate();
-                    repaint();
-                    pack();
-                    setSize(400, 600);
                     return logger;
                 }else{
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error de acceso", JOptionPane.ERROR_MESSAGE);
