@@ -35,6 +35,9 @@ public class Conexion {
                 if (connection != null) {
                     System.out.println("¡Conexión exitosa!");
 
+                    //Realiza la copia de seguridad cada vez que se establece una conexión
+                    //backup();
+
                 } else {
                     System.out.println("No se pudo establecer la conexión.");
                 }
@@ -46,6 +49,42 @@ public class Conexion {
     
         return connection;
     }
+
+    /* Método que realiza una copia de la base de datos en su estado actual - NO FUNCIONAL*/
+    //private static void backup() {
+    //    
+    //    try {
+    //        // Ruta donde se guardará la copia de seguridad
+    //        String backupPath = "F:\\Mis documentos\\CLASE\\INSO I\\Proyecto\\StockManager";
+//
+    //        // Nombre del archivo de la copia de seguridad
+    //        String backupFileName = "StockManager_BD_old.sql";
+//
+    //        // Comando para realizar la copia de seguridad con pg_dump
+    //        String[] cmd = {
+    //            "C:\\Program Files\\PostgreSQL\\16",
+    //            "-h", "localhost",
+    //            "-U", "postgres",
+    //            "-d", "StockManager_BD",
+    //            "-f", backupPath + backupFileName
+    //        };
+//
+    //        // Ejecutar el comando
+    //        ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+    //        Process process = processBuilder.start();
+//
+    //        // Esperar a que el proceso termine
+    //        int exitCode = process.waitFor();
+//
+    //        if (exitCode == 0) {
+    //            System.out.println("Copia de seguridad exitosa.");
+    //        } else {
+    //            System.err.println("Error al realizar la copia de seguridad.");
+    //        }
+    //    } catch (IOException | InterruptedException e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 
     // Método para cerrar la conexión
     //public static void closeConexion(Connection connection) {
