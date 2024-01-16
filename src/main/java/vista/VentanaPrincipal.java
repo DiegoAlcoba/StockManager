@@ -301,13 +301,7 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 
-        
-        //**PRESCINDIBLE** para depuración - app se conecta a la BD correctamente al iniciar
-        Connection con = Conexion.getConexion();
-        //Desconexión de la BD
-        Conexion.closeConexion(con);
 
-       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
