@@ -160,16 +160,19 @@ public class Ventanal extends javax.swing.JFrame {
         editProdTable = new javax.swing.JTable();
         acceptProduct = new javax.swing.JButton();
         cancelProducto = new javax.swing.JButton();
+        delProd = new javax.swing.JButton();
         usuariosEditar = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         editUserTable = new javax.swing.JTable();
         acceptUser = new javax.swing.JButton();
         cancelUser = new javax.swing.JButton();
+        delUsers = new javax.swing.JButton();
         distribuidoresEditar = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         distEditTable = new javax.swing.JTable();
         acceptDist = new javax.swing.JButton();
         cancelDist = new javax.swing.JButton();
+        delDist = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StockManager");
@@ -388,7 +391,7 @@ public class Ventanal extends javax.swing.JFrame {
                 .addGroup(pedidosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras)
                     .addComponent(doPedido))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
 
         Contenedor.add(pedidosPanel, "card4");
@@ -626,6 +629,13 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
+        delProd.setText("Eliminar producto");
+        delProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delProdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout productosEditarLayout = new javax.swing.GroupLayout(productosEditar);
         productosEditar.setLayout(productosEditarLayout);
         productosEditarLayout.setHorizontalGroup(
@@ -637,6 +647,8 @@ public class Ventanal extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(cancelProducto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delProd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acceptProduct))
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(352, Short.MAX_VALUE))
@@ -649,7 +661,8 @@ public class Ventanal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(productosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptProduct)
-                    .addComponent(cancelProducto))
+                    .addComponent(cancelProducto)
+                    .addComponent(delProd))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
 
@@ -682,6 +695,13 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
+        delUsers.setText("Eliminar usuarios");
+        delUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delUsersActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout usuariosEditarLayout = new javax.swing.GroupLayout(usuariosEditar);
         usuariosEditar.setLayout(usuariosEditarLayout);
         usuariosEditarLayout.setHorizontalGroup(
@@ -692,19 +712,23 @@ public class Ventanal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(cancelUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delUsers)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acceptUser))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 358, Short.MAX_VALUE))
         );
         usuariosEditarLayout.setVerticalGroup(
             usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(usuariosEditarLayout.createSequentialGroup()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(acceptUser)
-                    .addComponent(cancelUser))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGroup(usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(delUsers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(acceptUser)
+                        .addComponent(cancelUser)))
+                .addGap(0, 157, Short.MAX_VALUE))
         );
 
         Contenedor.add(usuariosEditar, "card8");
@@ -736,6 +760,13 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
+        delDist.setText("Eliminar distribuidor");
+        delDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delDistActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout distribuidoresEditarLayout = new javax.swing.GroupLayout(distribuidoresEditar);
         distribuidoresEditar.setLayout(distribuidoresEditarLayout);
         distribuidoresEditarLayout.setHorizontalGroup(
@@ -745,9 +776,11 @@ public class Ventanal extends javax.swing.JFrame {
                     .addGroup(distribuidoresEditarLayout.createSequentialGroup()
                         .addComponent(cancelDist)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delDist)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(acceptDist))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 358, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         distribuidoresEditarLayout.setVerticalGroup(
             distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -756,8 +789,9 @@ public class Ventanal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptDist)
-                    .addComponent(cancelDist))
-                .addGap(0, 182, Short.MAX_VALUE))
+                    .addComponent(cancelDist)
+                    .addComponent(delDist))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         Contenedor.add(distribuidoresEditar, "card8");
@@ -945,7 +979,7 @@ public class Ventanal extends javax.swing.JFrame {
         setSize(840, 400);
     }//GEN-LAST:event_usuariosButtonActionPerformed
 
-    private void doPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doPedidoActionPerformed
+    private void doPedidoActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // Obtener la lista de productos existentes
         Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
         
@@ -1255,6 +1289,106 @@ public class Ventanal extends javax.swing.JFrame {
         setSize(400, 600);
     }//GEN-LAST:event_salirActionPerformed
 
+    private void delUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delUsersActionPerformed
+        // Obtener la lista de usuarios
+        Usuario[] usuaries = OperacionesBD_usuario.getListaUsuarios_BD();
+        String[] usuarios = new String[usuaries.length];
+        for (int i = 0; i < usuaries.length; i++) {
+            usuarios[i] = usuaries[i].getUsername();
+        }
+        // Mostrar el JOptionPane con el desplegable de usuarios
+        String usuarioSeleccionado = (String) JOptionPane.showInputDialog(
+            this,
+            "Selecciona un usuario:",
+            "Eliminar Usuario",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            usuarios,
+            usuarios[0]);
+
+        // Si se selecciona un usuario y se pulsa el botón de aceptar
+        if (usuarioSeleccionado != null) {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que quieres eliminar al usuario " + usuarioSeleccionado + "?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+            // Si se confirma la eliminación del usuario
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Eliminar el usuario
+                OperacionesBD_usuario.delUsuario_BD(usuarioSeleccionado);
+            }
+        }
+    }
+//GEN-LAST:event_delUsersActionPerformed
+
+    private void delProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delProdActionPerformed
+        // Obtener la lista de productos
+        Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
+        String[] productosString = new String[productos.length];
+        for (int i = 0; i < productos.length; i++) {
+            productosString[i] = productos[i].getName();
+        }
+        // Mostrar el JOptionPane con el desplegable de productos
+        String productoSeleccionado = (String) JOptionPane.showInputDialog(
+            this,
+            "Selecciona un producto:",
+            "Eliminar Producto",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            productosString,
+            productosString[0]);
+
+        // Si se selecciona un producto y se pulsa el botón de aceptar
+        if (productoSeleccionado != null) {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que quieres eliminar el producto " + productoSeleccionado + "?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+            // Si se confirma la eliminación del producto
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Eliminar el producto
+                OperacionesBD_producto.delProducto_BD(productoSeleccionado);
+            }
+        }
+    }//GEN-LAST:event_delProdActionPerformed
+
+    private void delDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delDistActionPerformed
+        // Obtener la lista de distribuidores
+        Distribuidor[] distribuidores = OperacionesBD_distribuidor.getListaDistribuidores_BD();
+        String[] distribuidoresString = new String[distribuidores.length];
+        for (int i = 0; i < distribuidores.length; i++) {
+            distribuidoresString[i] = distribuidores[i].getNombre();
+        }
+        // Mostrar el JOptionPane con el desplegable de distribuidores
+        String distribuidorSeleccionado = (String) JOptionPane.showInputDialog(
+            this,
+            "Selecciona un distribuidor:",
+            "Eliminar Distribuidor",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            distribuidoresString,
+            distribuidoresString[0]);
+
+        // Si se selecciona un distribuidor y se pulsa el botón de aceptar
+        if (distribuidorSeleccionado != null) {
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que quieres eliminar el distribuidor " + distribuidorSeleccionado + "?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+            // Si se confirma la eliminación del distribuidor
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Eliminar el distribuidor
+                OperacionesBD_distribuidor.delDistribuidor_BD(distribuidorSeleccionado);
+            }
+        }
+    }//GEN-LAST:event_delDistActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1312,6 +1446,9 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JButton cancelProducto;
     private javax.swing.JButton cancelUser;
     private javax.swing.JButton contabilidadButton;
+    private javax.swing.JButton delDist;
+    private javax.swing.JButton delProd;
+    private javax.swing.JButton delUsers;
     private javax.swing.JTable distEditTable;
     private javax.swing.JButton distribuidoresButton;
     private javax.swing.JPanel distribuidoresEditar;
