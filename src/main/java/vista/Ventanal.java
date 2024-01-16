@@ -839,13 +839,13 @@ public class Ventanal extends javax.swing.JFrame {
 
     private void accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessActionPerformed
         logger = cl.acceso(userText, passField, loggin, menuAdmin);
-        revalidate();
-        repaint();
-        pack();
-        setSize(400, 600);
         if(logger != null){
             userMenuBar.setText(logger.getUsername());
             userMenuBar.setVisible(true);
+            revalidate();
+            repaint();
+            pack();
+            setSize(400, 600);
         }
     }//GEN-LAST:event_accessActionPerformed
 
