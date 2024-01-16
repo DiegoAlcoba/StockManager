@@ -13,9 +13,9 @@ import modelo.entidad.Usuario;
  *
  * @author diego
  */
-public class ControladorLoggin {
+public class ControladorLoggin extends JFrame {
 
-    public void acceso(JTextField user, JPasswordField pass, JPanel log, JPanel menu){
+    public Usuario acceso(JTextField user, JPasswordField pass, JPanel log, JPanel menu){
         if(user.getText().isEmpty() || pass.getPassword().length == 0){
             JOptionPane.showMessageDialog(null, "Rellena los campos para continuar", "Error de acceso", JOptionPane.ERROR_MESSAGE);
         }else{
@@ -24,8 +24,15 @@ public class ControladorLoggin {
             if(OperacionesBD_usuario.getUsuario_BD(usuario) != null){
                 Usuario usuarioBD = OperacionesBD_usuario.getUsuario_BD(usuario);
                 if(usuarioBD.getPass().equals(String.valueOf(contra))){
+                    getRootPane().setDefaultButton(null);
+                    Usuario logger = usuarioBD;
                     menu.setVisible(true);
                     log.setVisible(false);
+                    revalidate();
+                    repaint();
+                    pack();
+                    setSize(400, 600);
+                    return logger;
                 }else{
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Error de acceso", JOptionPane.ERROR_MESSAGE);
                 }
@@ -34,9 +41,6 @@ public class ControladorLoggin {
                 JOptionPane.showMessageDialog(null, "El usuario no es correcto", "Error de acceso", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-
-    public void distMenu(JPanel menu, JPanel distMenu){
-        
+        return null;
     }
 }
