@@ -4,19 +4,26 @@
  */
 package vista;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.beans.IntrospectionException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import javafx.event.ActionEvent;
 import modelo.db.Conexion;
 import modelo.db.OperacionesBD_distribuidor;
 import modelo.db.OperacionesBD_pedido;
@@ -43,14 +50,42 @@ public class Ventanal extends javax.swing.JFrame {
     public Ventanal() {
         setLocationRelativeTo(null);
         initComponents();
-        String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Precio", "Distribuidor", "Productos"};
-        String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
-        String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono"};
-        String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
-        dtmProducto.setColumnIdentifiers(tituloProducto);
-        dtmPedido.setColumnIdentifiers(tituloPedido);
-        dtmDistribuidor.setColumnIdentifiers(tituloDistribuidor);
-        dtmUsuario.setColumnIdentifiers(tituloUsuario);
+        String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Precio", "Distribuidor", "Productos", "Detalles"};
+        String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad", ""};
+        String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono", ""};
+        String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono", ""};
+        dtmProducto = new DefaultTableModel(tituloProducto, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Las celdas no son editables
+            }
+        };
+        
+        dtmPedido = new DefaultTableModel(tituloPedido, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Las celdas no son editables
+            }
+        };
+        
+        dtmDistribuidor = new DefaultTableModel(tituloDistribuidor, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Las celdas no son editables
+            }
+        };
+        
+        dtmUsuario = new DefaultTableModel(tituloUsuario, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Las celdas no son editables
+            }
+        };
+        
+        pedidosTable.setModel(dtmPedido);
+        productosTable.setModel(dtmProducto);
+        distribuidoresTable.setModel(dtmDistribuidor);
+        usuariosTable.setModel(dtmUsuario);
         pedidosTable.setModel(dtmPedido);
         productosTable.setModel(dtmProducto);
         distribuidoresTable.setModel(dtmDistribuidor);
@@ -494,6 +529,7 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_userTextActionPerformed
 
     private void pedidosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosButtonActionPerformed
+        //TODO: Hacer que se muestren los pedidos
         pedidosPanel.setVisible(true);
         menuAdmin.setVisible(false);
         revalidate();
@@ -648,6 +684,12 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_addDistActionPerformed
 
     private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
+        Usuario[] usuarios = OperacionesBD_usuario.getListaUsuarios_BD();
+        dtmUsuario.setRowCount(0);
+        for(int i = 0; i < usuarios.length; i++){
+            dtmUsuario.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn(), });
+        }
+        
         usuariosMenu.setVisible(true);
         menuAdmin.setVisible(false);
         revalidate();
@@ -690,7 +732,7 @@ public class Ventanal extends javax.swing.JFrame {
         if(result == JOptionPane.OK_OPTION){
             Usuario usuario = new Usuario(user.getText(),pass.getText(), rango.isSelected(), nombre.getText(), Integer.parseInt(SSId.getText()), mail.getText(), Integer.parseInt(tlfn.getText()));
             if(OperacionesBD_usuario.addUsuario_BD(usuario)){
-                dtmUsuario.addRow(new Object[]{usuario.getNombre(), usuario.getPrivileges()? "admin" : "usuario", usuario.getSSId(), usuario.getEmail(), usuario.getTlfn()});
+                dtmUsuario.addRow(new Object[]{usuario.getNombre(), usuario.getPrivileges()? "admin" : "usuario", usuario.getSSId(), usuario.getEmail(), usuario.getTlfn(), "Modificar"});
             }
             else{
                 JOptionPane.showMessageDialog(null, "El usuario no se ha podido añadir", "Error de acceso", JOptionPane.ERROR_MESSAGE);
@@ -699,6 +741,11 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_addUsuarioActionPerformed
 
     private void atras4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras4ActionPerformed
+        Usuario[] usuarios = OperacionesBD_usuario.getListaUsuarios_BD();
+        dtmUsuario.setRowCount(0);
+        for(int i = 0; i < usuarios.length; i++){
+            dtmUsuario.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn()});
+        }
         usuariosMenu.setVisible(false);
         menuAdmin.setVisible(true);
         revalidate();
