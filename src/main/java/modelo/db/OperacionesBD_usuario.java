@@ -43,7 +43,7 @@ public class OperacionesBD_usuario {
         return false;
     }
     
-    /*Devuelve un usuario de la base de datos*/
+    /*Devuelve el usuario con el nombre pasado por parámetro de la base de datos*/
     public static Usuario getUsuario_BD (String username) {
         String query = "SELECT * FROM usuario WHERE nombreUsuario = ?";
 
@@ -74,7 +74,44 @@ public class OperacionesBD_usuario {
                 }
             } 
         } catch (SQLException e) {
-            System.err.println("Error al obtener el usuario: " + e.getMessage());
+            System.err.println("Error al obtener el usuario con el nombre de usuario indicado: " + e.getMessage());
+
+            return null;
+        }
+    }
+
+    /*Devuelve un usuario de la base de datos con el SSId pasado por parámetro*/
+    public static Usuario getUsuarioSSId_BD (int ssid) {
+        String query = "SELECT * FROM usuario WHERE SSId = ?";
+
+        try (Connection conn = Conexion.getConexion();
+         PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+    
+            // Se establece el valor a cada uno de los parámetro de la sentencia
+            preparedStatement.setInt(1, ssid);
+            
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    Usuario user = new Usuario();
+                    user.setUserId(resultSet.getInt("userId"));
+                    user.setUsername(resultSet.getString("nombreUsuario"));
+                    user.setPass(resultSet.getString("contrasena"));
+                    user.setPrivileges(getPrivsBool(resultSet.getInt("privilegios")));
+                    user.setNombre(resultSet.getString("nombre"));
+                    user.setSSId(resultSet.getInt("SSId"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setTlfn(resultSet.getInt("numTelefono"));
+
+                    return user;
+                
+                } else {
+                    // Manejar el caso en el que no se encuentra el producto
+                    return null;
+                }
+            } 
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el usuario con el SSId indicado: " + e.getMessage());
 
             return null;
         }
