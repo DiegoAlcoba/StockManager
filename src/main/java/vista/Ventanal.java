@@ -43,6 +43,9 @@ public class Ventanal extends javax.swing.JFrame {
     DefaultTableModel dtmProducto = new DefaultTableModel();
     DefaultTableModel dtmDistribuidor = new DefaultTableModel();
     DefaultTableModel dtmUsuario = new DefaultTableModel();
+    DefaultTableModel dtmeditUser = new DefaultTableModel();
+    DefaultTableModel dtmeditDist = new DefaultTableModel();
+    DefaultTableModel dtmeditProd = new DefaultTableModel();
     
     /**
      * Creates new form Ventanal
@@ -51,9 +54,12 @@ public class Ventanal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         initComponents();
         String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Precio", "Distribuidor", "Productos", "Detalles"};
-        String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad", ""};
-        String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono", ""};
-        String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono", ""};
+        String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
+        String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono"};
+        String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
+        String[] tituloEditUser = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
+        String[] tituloEditDist = new String[]{"ID", "Nombre", "Mail", "Telefono"};
+        String[] tituloEditProd = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
         dtmProducto = new DefaultTableModel(tituloProducto, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -81,7 +87,9 @@ public class Ventanal extends javax.swing.JFrame {
                 return false; // Las celdas no son editables
             }
         };
-        
+        dtmeditDist = new DefaultTableModel(tituloEditDist, 0);
+        dtmeditProd = new DefaultTableModel(tituloEditProd, 0);
+        dtmeditUser = new DefaultTableModel(tituloEditUser, 0);
         pedidosTable.setModel(dtmPedido);
         productosTable.setModel(dtmProducto);
         distribuidoresTable.setModel(dtmDistribuidor);
@@ -90,8 +98,9 @@ public class Ventanal extends javax.swing.JFrame {
         productosTable.setModel(dtmProducto);
         distribuidoresTable.setModel(dtmDistribuidor);
         usuariosTable.setModel(dtmUsuario);
-        
-        
+        editUserTable.setModel(dtmeditUser);
+        distEditTable.setModel(dtmeditDist);
+        editProdTable.setModel(dtmeditProd);
     }
 
     /**
@@ -117,6 +126,7 @@ public class Ventanal extends javax.swing.JFrame {
         contabilidadButton = new javax.swing.JButton();
         distribuidoresButton = new javax.swing.JButton();
         usuariosButton = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
         pedidosPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pedidosTable = new javax.swing.JTable();
@@ -127,16 +137,34 @@ public class Ventanal extends javax.swing.JFrame {
         productosTable = new javax.swing.JTable();
         addProducto = new javax.swing.JButton();
         atras2 = new javax.swing.JButton();
+        editProduct = new javax.swing.JButton();
         distribuidoresPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         distribuidoresTable = new javax.swing.JTable();
         addDist = new javax.swing.JButton();
         atras3 = new javax.swing.JButton();
-        usuariosMenu = new javax.swing.JPanel();
+        editDist = new javax.swing.JButton();
+        usuariosPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         usuariosTable = new javax.swing.JTable();
         addUsuario = new javax.swing.JButton();
         atras4 = new javax.swing.JButton();
+        editUsers = new javax.swing.JButton();
+        productosEditar = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        editProdTable = new javax.swing.JTable();
+        acceptProduct = new javax.swing.JButton();
+        cancelProducto = new javax.swing.JButton();
+        usuariosEditar = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        editUserTable = new javax.swing.JTable();
+        acceptUser = new javax.swing.JButton();
+        cancelUser = new javax.swing.JButton();
+        distribuidoresEditar = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        distEditTable = new javax.swing.JTable();
+        acceptDist = new javax.swing.JButton();
+        cancelDist = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StockManager");
@@ -285,6 +313,23 @@ public class Ventanal extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(102, 6, 0, 490);
         menuAdmin.add(usuariosButton, gridBagConstraints);
 
+        salir.setText("Salir");
+        salir.setMaximumSize(new java.awt.Dimension(99, 23));
+        salir.setMinimumSize(new java.awt.Dimension(99, 23));
+        salir.setPreferredSize(new java.awt.Dimension(109, 23));
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 6;
+        gridBagConstraints.ipady = 38;
+        gridBagConstraints.insets = new java.awt.Insets(5, 6, 6, 490);
+        menuAdmin.add(salir, gridBagConstraints);
+
         Contenedor.add(menuAdmin, "card3");
 
         pedidosPanel.setMaximumSize(new java.awt.Dimension(400, 250));
@@ -322,7 +367,7 @@ public class Ventanal extends javax.swing.JFrame {
         pedidosPanel.setLayout(pedidosPanelLayout);
         pedidosPanelLayout.setHorizontalGroup(
             pedidosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(pedidosPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atras)
@@ -338,7 +383,7 @@ public class Ventanal extends javax.swing.JFrame {
                 .addGroup(pedidosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras)
                     .addComponent(doPedido))
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Contenedor.add(pedidosPanel, "card4");
@@ -374,6 +419,8 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
+        editProduct.setText("Editar");
+
         javax.swing.GroupLayout productosPanelLayout = new javax.swing.GroupLayout(productosPanel);
         productosPanel.setLayout(productosPanelLayout);
         productosPanelLayout.setHorizontalGroup(
@@ -387,6 +434,8 @@ public class Ventanal extends javax.swing.JFrame {
                     .addGroup(productosPanelLayout.createSequentialGroup()
                         .addComponent(atras2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editProduct)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addProducto))))
         );
         productosPanelLayout.setVerticalGroup(
@@ -396,7 +445,8 @@ public class Ventanal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(productosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras2)
-                    .addComponent(addProducto))
+                    .addComponent(addProducto)
+                    .addComponent(editProduct))
                 .addContainerGap(161, Short.MAX_VALUE))
         );
 
@@ -433,6 +483,13 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
+        editDist.setText("editUsers");
+        editDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editDistActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout distribuidoresPanelLayout = new javax.swing.GroupLayout(distribuidoresPanel);
         distribuidoresPanel.setLayout(distribuidoresPanelLayout);
         distribuidoresPanelLayout.setHorizontalGroup(
@@ -446,6 +503,8 @@ public class Ventanal extends javax.swing.JFrame {
                     .addGroup(distribuidoresPanelLayout.createSequentialGroup()
                         .addComponent(atras3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editDist)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addDist))))
         );
         distribuidoresPanelLayout.setVerticalGroup(
@@ -455,14 +514,15 @@ public class Ventanal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(distribuidoresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras3)
-                    .addComponent(addDist))
+                    .addComponent(addDist)
+                    .addComponent(editDist))
                 .addContainerGap(181, Short.MAX_VALUE))
         );
 
         Contenedor.add(distribuidoresPanel, "card6");
 
-        usuariosMenu.setMaximumSize(new java.awt.Dimension(400, 250));
-        usuariosMenu.setMinimumSize(new java.awt.Dimension(400, 250));
+        usuariosPanel.setMaximumSize(new java.awt.Dimension(400, 250));
+        usuariosPanel.setMinimumSize(new java.awt.Dimension(400, 250));
 
         usuariosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -477,7 +537,7 @@ public class Ventanal extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(usuariosTable);
 
-        addUsuario.setText("Añadir Usuario");
+        addUsuario.setText("Añadir usuario");
         addUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addUsuarioActionPerformed(evt);
@@ -491,33 +551,206 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout usuariosMenuLayout = new javax.swing.GroupLayout(usuariosMenu);
-        usuariosMenu.setLayout(usuariosMenuLayout);
-        usuariosMenuLayout.setHorizontalGroup(
-            usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(usuariosMenuLayout.createSequentialGroup()
+        editUsers.setText("Editar");
+        editUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUsersActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout usuariosPanelLayout = new javax.swing.GroupLayout(usuariosPanel);
+        usuariosPanel.setLayout(usuariosPanelLayout);
+        usuariosPanelLayout.setHorizontalGroup(
+            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(usuariosMenuLayout.createSequentialGroup()
+                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(usuariosPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(usuariosMenuLayout.createSequentialGroup()
+                    .addGroup(usuariosPanelLayout.createSequentialGroup()
                         .addComponent(atras4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editUsers)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addUsuario))))
         );
-        usuariosMenuLayout.setVerticalGroup(
-            usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(usuariosMenuLayout.createSequentialGroup()
+        usuariosPanelLayout.setVerticalGroup(
+            usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(usuariosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras4)
-                    .addComponent(addUsuario))
+                    .addComponent(addUsuario)
+                    .addComponent(editUsers))
                 .addContainerGap(181, Short.MAX_VALUE))
         );
 
-        Contenedor.add(usuariosMenu, "card6");
+        Contenedor.add(usuariosPanel, "card6");
+
+        editProdTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(editProdTable);
+
+        acceptProduct.setText("Aceptar");
+        acceptProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptProductActionPerformed(evt);
+            }
+        });
+
+        cancelProducto.setText("Cancelar");
+        cancelProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelProductoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout productosEditarLayout = new javax.swing.GroupLayout(productosEditar);
+        productosEditar.setLayout(productosEditarLayout);
+        productosEditarLayout.setHorizontalGroup(
+            productosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(productosEditarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(productosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(productosEditarLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(cancelProducto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(acceptProduct))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(352, Short.MAX_VALUE))
+        );
+        productosEditarLayout.setVerticalGroup(
+            productosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(productosEditarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(productosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptProduct)
+                    .addComponent(cancelProducto))
+                .addContainerGap(210, Short.MAX_VALUE))
+        );
+
+        Contenedor.add(productosEditar, "card8");
+
+        editUserTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(editUserTable);
+
+        acceptUser.setText("Aceptar");
+        acceptUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptUserActionPerformed(evt);
+            }
+        });
+
+        cancelUser.setText("Cancelar");
+        cancelUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelUserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout usuariosEditarLayout = new javax.swing.GroupLayout(usuariosEditar);
+        usuariosEditar.setLayout(usuariosEditarLayout);
+        usuariosEditarLayout.setHorizontalGroup(
+            usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosEditarLayout.createSequentialGroup()
+                .addGroup(usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(usuariosEditarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cancelUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(acceptUser))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+        usuariosEditarLayout.setVerticalGroup(
+            usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosEditarLayout.createSequentialGroup()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(usuariosEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptUser)
+                    .addComponent(cancelUser))
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+
+        Contenedor.add(usuariosEditar, "card8");
+
+        distEditTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(distEditTable);
+
+        acceptDist.setText("Aceptar");
+        acceptDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptDistActionPerformed(evt);
+            }
+        });
+
+        cancelDist.setText("Cancelar");
+        cancelDist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelDistActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout distribuidoresEditarLayout = new javax.swing.GroupLayout(distribuidoresEditar);
+        distribuidoresEditar.setLayout(distribuidoresEditarLayout);
+        distribuidoresEditarLayout.setHorizontalGroup(
+            distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(distribuidoresEditarLayout.createSequentialGroup()
+                .addGroup(distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(distribuidoresEditarLayout.createSequentialGroup()
+                        .addComponent(cancelDist)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(acceptDist))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 358, Short.MAX_VALUE))
+        );
+        distribuidoresEditarLayout.setVerticalGroup(
+            distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(distribuidoresEditarLayout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(distribuidoresEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(acceptDist)
+                    .addComponent(cancelDist))
+                .addGap(0, 182, Short.MAX_VALUE))
+        );
+
+        Contenedor.add(distribuidoresEditar, "card8");
 
         getContentPane().add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 1, 810, 500));
 
@@ -687,10 +920,9 @@ public class Ventanal extends javax.swing.JFrame {
         Usuario[] usuarios = OperacionesBD_usuario.getListaUsuarios_BD();
         dtmUsuario.setRowCount(0);
         for(int i = 0; i < usuarios.length; i++){
-            dtmUsuario.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn(), });
+            dtmUsuario.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn() });
         }
-        
-        usuariosMenu.setVisible(true);
+        usuariosPanel.setVisible(true);
         menuAdmin.setVisible(false);
         revalidate();
         repaint();
@@ -746,13 +978,139 @@ public class Ventanal extends javax.swing.JFrame {
         for(int i = 0; i < usuarios.length; i++){
             dtmUsuario.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn()});
         }
-        usuariosMenu.setVisible(false);
+        usuariosPanel.setVisible(false);
         menuAdmin.setVisible(true);
         revalidate();
         repaint();
         pack();
         setSize(400, 600);
     }//GEN-LAST:event_atras4ActionPerformed
+    private void acceptProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_acceptProductActionPerformed
+
+    private void cancelProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelProductoActionPerformed
+
+    private void acceptUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptUserActionPerformed
+        for (int i = 0; i < editUserTable.getRowCount(); i++) {
+            for (int j = 0; j < editUserTable.getColumnCount(); j++) {
+                Object editUserCellValue = editUserTable.getValueAt(i, j);
+                Object userCellValue = usuariosTable.getValueAt(i, j);
+                if (editUserCellValue != null && !editUserCellValue.equals(userCellValue)) {
+                    int ssid = (int) usuariosTable.getValueAt(i, 2);
+                    usuariosTable.setValueAt(editUserCellValue, i, j);
+                    Usuario usuario = OperacionesBD_usuario.getUsuario_BD(ssid);
+                    OperacionesBD_usuario.delUsuario_BD(ssid);
+                    switch (j) {
+                        case 0:
+                            usuario.setNombre((String) editUserCellValue);
+                            break;
+                        case 1:
+                            usuario.setPrivileges((boolean) editUserCellValue);
+                            break;
+                        case 2:
+                            usuario.setSSId((int) editUserCellValue);
+                            break;
+                        case 3:
+                            usuario.setEmail((String) editUserCellValue);
+                            break;
+                        case 4:
+                            usuario.setTlfn((int) editUserCellValue);
+                            break;
+                    }
+                    OperacionesBD_usuario.addUsuario_BD(usuario);
+                }
+            }
+        }
+           
+    }//GEN-LAST:event_acceptUserActionPerformed
+
+    private void cancelUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelUserActionPerformed
+        usuariosEditar.setVisible(false);
+        usuariosPanel.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
+    }//GEN-LAST:event_cancelUserActionPerformed
+
+    private void cancelDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelDistActionPerformed
+        distribuidoresEditar.setVisible(false);
+        distribuidoresPanel.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
+    }//GEN-LAST:event_cancelDistActionPerformed
+
+    private void editUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUsersActionPerformed
+        dtmeditUser.setRowCount(0);
+        Usuario[] usuarios = OperacionesBD_usuario.getListaUsuarios_BD();
+        for(int i = 0; i < usuarios.length; i++){
+            dtmeditUser.addRow(new Object[]{usuarios[i].getNombre(), usuarios[i].getPrivileges()? "admin" : "usuario", usuarios[i].getSSId(), usuarios[i].getEmail(), usuarios[i].getTlfn(), "Modificar"});
+        }
+        usuariosPanel.setVisible(false);
+        usuariosEditar.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
+    }//GEN-LAST:event_editUsersActionPerformed
+
+    private void editDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDistActionPerformed
+        dtmeditDist.setRowCount(0);
+        Distribuidor[] distribuidores = OperacionesBD_distribuidor.getListaDistribuidores_BD();
+        for(int i = 0; i < distribuidores.length; i++){
+            dtmeditDist.addRow(new Object[]{distribuidores[i].getId(), distribuidores[i].getNombre(), distribuidores[i].getMail(), distribuidores[i].getTlfn(), "Modificar"});
+        }
+        distribuidoresPanel.setVisible(false);
+        distribuidoresEditar.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
+    }//GEN-LAST:event_editDistActionPerformed
+
+    private void acceptDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptDistActionPerformed
+        for (int i = 0; i < distEditTable.getRowCount(); i++) {
+            for (int j = 0; j < distEditTable.getColumnCount(); j++) {
+                Object editDistCellValue = distEditTable.getValueAt(i, j);
+                Object distCellValue = distribuidoresTable.getValueAt(i, j);
+                if (editDistCellValue != null && !editDistCellValue.equals(distCellValue)) {
+                    distribuidoresTable.setValueAt(editDistCellValue, i, j);
+                    String id = (String) distribuidoresTable.getValueAt(i, 0);
+                    Distribuidor distribuidor = OperacionesBD_distribuidor.getDistribuidor_BD(id);
+                    switch (j) {
+                        case 0:
+                            distribuidor.setId((String) editDistCellValue);
+                            break;
+                        case 1:
+                            distribuidor.setNombre((String) editDistCellValue);
+                            break;
+                        case 2:
+                            distribuidor.setMail((String) editDistCellValue);
+                            break;
+                        case 3:
+                            distribuidor.setTlfn((int) editDistCellValue);
+                            break;
+                    }
+                    OperacionesBD_distribuidor.delDistribuidor_BD(id);
+                    OperacionesBD_distribuidor.addDistrib_BD(distribuidor);
+                }
+            }
+        }
+    }//GEN-LAST:event_acceptDistActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        menuAdmin.setVisible(false);
+        loggin.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(400, 600);
+    }//GEN-LAST:event_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -795,6 +1153,9 @@ public class Ventanal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Contenedor;
+    private javax.swing.JButton acceptDist;
+    private javax.swing.JButton acceptProduct;
+    private javax.swing.JButton acceptUser;
     private javax.swing.JButton access;
     private javax.swing.JButton addDist;
     private javax.swing.JButton addProducto;
@@ -803,17 +1164,30 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JButton atras2;
     private javax.swing.JButton atras3;
     private javax.swing.JButton atras4;
+    private javax.swing.JButton cancelDist;
+    private javax.swing.JButton cancelProducto;
+    private javax.swing.JButton cancelUser;
     private javax.swing.JButton contabilidadButton;
+    private javax.swing.JTable distEditTable;
     private javax.swing.JButton distribuidoresButton;
+    private javax.swing.JPanel distribuidoresEditar;
     private javax.swing.JPanel distribuidoresPanel;
     private javax.swing.JTable distribuidoresTable;
     private javax.swing.JButton doPedido;
+    private javax.swing.JButton editDist;
+    private javax.swing.JTable editProdTable;
+    private javax.swing.JButton editProduct;
+    private javax.swing.JTable editUserTable;
+    private javax.swing.JButton editUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPanel loggin;
     private javax.swing.JPanel menuAdmin;
     private javax.swing.JPasswordField passField;
@@ -821,11 +1195,14 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JPanel pedidosPanel;
     private javax.swing.JTable pedidosTable;
     private javax.swing.JButton productosButton;
+    private javax.swing.JPanel productosEditar;
     private javax.swing.JPanel productosPanel;
     private javax.swing.JTable productosTable;
+    private javax.swing.JButton salir;
     private javax.swing.JTextField userText;
     private javax.swing.JButton usuariosButton;
-    private javax.swing.JPanel usuariosMenu;
+    private javax.swing.JPanel usuariosEditar;
+    private javax.swing.JPanel usuariosPanel;
     private javax.swing.JTable usuariosTable;
     // End of variables declaration//GEN-END:variables
 }
