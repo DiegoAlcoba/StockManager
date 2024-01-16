@@ -16,9 +16,11 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +35,8 @@ import modelo.entidad.Distribuidor;
 import modelo.entidad.Pedido;
 import modelo.entidad.Producto;
 import modelo.entidad.Usuario;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -46,20 +50,21 @@ public class Ventanal extends javax.swing.JFrame {
     DefaultTableModel dtmeditUser = new DefaultTableModel();
     DefaultTableModel dtmeditDist = new DefaultTableModel();
     DefaultTableModel dtmeditProd = new DefaultTableModel();
-    
+    Usuario logger;
     /**
      * Creates new form Ventanal
      */
     public Ventanal() {
         setLocationRelativeTo(null);
         initComponents();
-        String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Precio", "Distribuidor", "Productos", "Detalles"};
+        String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Producto", "Distribuidor"};
         String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
         String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono"};
         String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
         String[] tituloEditUser = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
         String[] tituloEditDist = new String[]{"ID", "Nombre", "Mail", "Telefono"};
         String[] tituloEditProd = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
+        
         dtmProducto = new DefaultTableModel(tituloProducto, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -420,6 +425,11 @@ public class Ventanal extends javax.swing.JFrame {
         });
 
         editProduct.setText("Editar");
+        editProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProductActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout productosPanelLayout = new javax.swing.GroupLayout(productosPanel);
         productosPanel.setLayout(productosPanelLayout);
@@ -483,7 +493,7 @@ public class Ventanal extends javax.swing.JFrame {
             }
         });
 
-        editDist.setText("editUsers");
+        editDist.setText("Editar");
         editDist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editDistActionPerformed(evt);
@@ -762,7 +772,11 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_userTextActionPerformed
 
     private void pedidosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosButtonActionPerformed
-        //TODO: Hacer que se muestren los pedidos
+        Pedido[] pedidos = OperacionesBD_pedido.getListaPedidos_BD();
+        dtmPedido.setRowCount(0);
+        for(int i = 0; i < pedidos.length; i++){
+            dtmPedido.addRow(new Object[]{pedidos[i].getPedidoId(), pedidos[i].getUserId(), pedidos[i].getFecha(), (pedidos[i].getProductos() != null?pedidos[i].getProductos().getName(): ""), pedidos[i].getDistribuidor()});
+        }
         pedidosPanel.setVisible(true);
         menuAdmin.setVisible(false);
         revalidate();
@@ -781,6 +795,7 @@ public class Ventanal extends javax.swing.JFrame {
                 Usuario usuarioBD = OperacionesBD_usuario.getUsuario_BD(usuario);
                 if(usuarioBD.getPass().equals(String.valueOf(contra))){
                     getRootPane().setDefaultButton(null);
+                    logger = usuarioBD;
                     menuAdmin.setVisible(true);
                     loggin.setVisible(false);
                     revalidate();
@@ -931,9 +946,41 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_usuariosButtonActionPerformed
 
     private void doPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_doPedidoActionPerformed
-
+        // Obtener la lista de productos existentes
+        Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
+        
+        // Crear un JComboBox con los nombres de los productos existentes
+        JComboBox<String> productoComboBox = new JComboBox<>();
+        for (Producto producto : productos) {
+            productoComboBox.addItem(producto.getName());
+        }
+        
+        JPanel ingresaPedido = new JPanel();
+        ingresaPedido.setLayout(new BoxLayout(ingresaPedido, BoxLayout.Y_AXIS)); // Establecer el layout a BoxLayout
+        ingresaPedido.setPreferredSize(new Dimension(300, 250)); // Establecer el tamaño preferido del panel
+        ingresaPedido.add(new JLabel("Producto"));
+        ingresaPedido.add(productoComboBox);
+        JSpinner cantidad = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        ingresaPedido.add(new JLabel("Cantidad"));
+        ingresaPedido.add(cantidad);
+        
+        int result = JOptionPane.showConfirmDialog(null, ingresaPedido, "Realizar pedido", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String selectedProduct = (String) productoComboBox.getSelectedItem();
+            // Aquí puedes agregar la lógica para realizar el pedido con el producto seleccionado
+            Pedido pedido = new Pedido(logger.getSSId(), OperacionesBD_producto.getProducto_BD(selectedProduct));
+            BigDecimal cantidadValue = new BigDecimal(cantidad.getValue().toString());
+            pedido.setDistribuidor(OperacionesBD_producto.getProducto_BD(selectedProduct).getDistribId());
+            Pedido[] pedidos = OperacionesBD_pedido.getListaPedidos_BD();
+           if(OperacionesBD_pedido.addPedido_BD(pedido)){
+                dtmPedido.addRow(new Object[]{pedidos[pedidos.length-1].getPedidoId(), pedidos[pedidos.length-1].getUserId(), pedidos[pedidos.length-1].getFecha(), selectedProduct,pedidos[pedidos.length-1].getDistribuidor()});
+              }
+              else{
+                JOptionPane.showMessageDialog(null, "El pedido no se ha podido añadir", "Error de acceso", JOptionPane.ERROR_MESSAGE);
+              
+           }
+        }
+    }
     private void addUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUsuarioActionPerformed
         JPanel ingresaUsuario = new JPanel();
         ingresaUsuario.setLayout(new BoxLayout(ingresaUsuario, BoxLayout.Y_AXIS)); // Establecer el layout a BoxLayout
@@ -986,11 +1033,65 @@ public class Ventanal extends javax.swing.JFrame {
         setSize(400, 600);
     }//GEN-LAST:event_atras4ActionPerformed
     private void acceptProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptProductActionPerformed
-        // TODO add your handling code here:
+        for (int i = 0; i < editProdTable.getRowCount(); i++) {
+            for (int j = 0; j < editProdTable.getColumnCount(); j++) {
+                Object editProdCellValue = editProdTable.getValueAt(i, j);
+                Object prodCellValue = productosTable.getValueAt(i, j);
+                if (editProdCellValue != null && !editProdCellValue.equals(prodCellValue)) {
+                    productosTable.setValueAt(editProdCellValue, i, j);
+                    String nombre = (String) productosTable.getValueAt(i, 0);
+                    Producto producto = OperacionesBD_producto.getProducto_BD(nombre);
+                    OperacionesBD_producto.delProducto_BD(producto.getName());
+                    switch (j) {
+                        case 0:
+                            producto.setName((String) editProdCellValue);
+                            break;
+                        case 1:
+                            producto.setTipo((String) editProdCellValue);
+                            break;
+                        case 2:
+                            producto.setDistribuidorId((String) editProdCellValue);
+                            break;
+                        case 3:
+                            if (editProdCellValue instanceof BigDecimal) {
+                                producto.setPrecio((BigDecimal) editProdCellValue);
+                            } else if (editProdCellValue instanceof String) {
+                                producto.setPrecio(new BigDecimal((String) editProdCellValue));
+                            } else {
+                                throw new IllegalArgumentException("Precio debe ser BigDecimal o String que pueda convertirse a BigDecimal");
+                            }
+                            break;
+                        case 4:
+                            if (editProdCellValue instanceof Integer) {
+                                producto.setCantidad((Integer) editProdCellValue);
+                            } else if (editProdCellValue instanceof String) {
+                                producto.setCantidad(Integer.parseInt((String) editProdCellValue));
+                            } else {
+                                throw new IllegalArgumentException("Cantidad debe ser Integer o String que pueda convertirse a Integer");
+                            }
+                            break;
+                    }
+                    productosTable.setValueAt(editProdCellValue, i, j);
+                    OperacionesBD_producto.addProducto_BD(producto);
+                }
+            }
+        } 
+        productosEditar.setVisible(false);
+        productosPanel.setVisible(true);
+        productosPanel.repaint();
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
     }//GEN-LAST:event_acceptProductActionPerformed
 
     private void cancelProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelProductoActionPerformed
-        // TODO add your handling code here:
+        productosEditar.setVisible(false);
+        productosPanel.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
     }//GEN-LAST:event_cancelProductoActionPerformed
 
     private void acceptUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptUserActionPerformed
@@ -999,32 +1100,60 @@ public class Ventanal extends javax.swing.JFrame {
                 Object editUserCellValue = editUserTable.getValueAt(i, j);
                 Object userCellValue = usuariosTable.getValueAt(i, j);
                 if (editUserCellValue != null && !editUserCellValue.equals(userCellValue)) {
-                    int ssid = (int) usuariosTable.getValueAt(i, 2);
+                    Object ssidObject = usuariosTable.getValueAt(i, 2);
+                    int ssid;
+                    if (ssidObject instanceof Integer) {
+                        ssid = (Integer) ssidObject;
+                    } else if (ssidObject instanceof String) {
+                        try {
+                            ssid = Integer.parseInt((String) ssidObject);
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("SSID debe ser un String que pueda convertirse a Integer");
+                        }
+                    }else {
+                        throw new IllegalArgumentException("SSID debe ser Integer o String que pueda convertirse a Integer");
+                    }
+                    Usuario usuario = OperacionesBD_usuario.getUsuarioSSId_BD(ssid);
+                    OperacionesBD_usuario.delUsuario_BD(usuario.getUsername());
                     usuariosTable.setValueAt(editUserCellValue, i, j);
-                    Usuario usuario = OperacionesBD_usuario.getUsuario_BD(ssid);
-                    OperacionesBD_usuario.delUsuario_BD(ssid);
                     switch (j) {
                         case 0:
                             usuario.setNombre((String) editUserCellValue);
                             break;
                         case 1:
-                            usuario.setPrivileges((boolean) editUserCellValue);
+                            if(editUserCellValue.equals("admin")){
+                                usuario.setPrivileges(true);
+                            }else{
+                                usuario.setPrivileges(false);
+                            }
+
                             break;
                         case 2:
-                            usuario.setSSId((int) editUserCellValue);
+                            usuario.setSSId(Integer.parseInt((String) editUserCellValue));
                             break;
                         case 3:
                             usuario.setEmail((String) editUserCellValue);
                             break;
                         case 4:
-                            usuario.setTlfn((int) editUserCellValue);
+                            if(editUserCellValue instanceof String){
+                                usuario.setTlfn(Integer.parseInt((String) editUserCellValue));
+                            }else{
+                                usuario.setTlfn((int) editUserCellValue);
+                            }
                             break;
                     }
+                    usuariosTable.setValueAt(editUserCellValue, i, j);
                     OperacionesBD_usuario.addUsuario_BD(usuario);
                 }
             }
-        }
-           
+        } 
+        usuariosEditar.setVisible(false);
+        usuariosPanel.setVisible(true);
+        usuariosPanel.repaint();
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);    
     }//GEN-LAST:event_acceptUserActionPerformed
 
     private void cancelUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelUserActionPerformed
@@ -1056,7 +1185,7 @@ public class Ventanal extends javax.swing.JFrame {
         revalidate();
         repaint();
         pack();
-        setSize(840, 400);
+        setSize(600, 400);
     }//GEN-LAST:event_editUsersActionPerformed
 
     private void editDistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDistActionPerformed
@@ -1102,6 +1231,20 @@ public class Ventanal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_acceptDistActionPerformed
+
+    private void editProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductActionPerformed
+        dtmeditProd.setRowCount(0);
+        Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
+        for(int i = 0; i < productos.length; i++){
+            dtmeditProd.addRow(new Object[]{productos[i].getName(), productos[i].getTipo(), productos[i].getDistribId(), productos[i].getPrecio(), productos[i].getCantidad(), "Modificar"});
+        }
+        productosPanel.setVisible(false);
+        productosEditar.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(600, 350);
+    }//GEN-LAST:event_editProductActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         menuAdmin.setVisible(false);
