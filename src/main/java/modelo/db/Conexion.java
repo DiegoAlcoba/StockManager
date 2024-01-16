@@ -4,6 +4,7 @@
  */
 package modelo.db;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class Conexion {
 
                 if (connection != null) {
                     System.out.println("¡Conexión exitosa!");
+
                 } else {
                     System.out.println("No se pudo establecer la conexión.");
                 }
@@ -46,14 +48,14 @@ public class Conexion {
     }
 
     // Método para cerrar la conexión
-    public static void closeConexion(Connection connection) {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-                System.out.println("Conexión cerrada.");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar la conexión: " + e.getMessage());
-        }
-    }
+    //public static void closeConexion(Connection connection) {
+    //    try {
+    //        if (connection != null && !connection.isClosed()) {
+    //            connection.close();
+    //            System.out.println("Conexión cerrada.");
+    //        }
+    //    } catch (SQLException e) {
+    //        System.err.println("Error al cerrar la conexión: " + e.getMessage());
+    //    }
+    //}
 }
