@@ -282,6 +282,7 @@ public class Ventanal extends javax.swing.JFrame {
         menuAdmin.add(productosButton, gridBagConstraints);
 
         contabilidadButton.setText("Contabilidad");
+        contabilidadButton.setVisible(false);
         contabilidadButton.setPreferredSize(new java.awt.Dimension(109, 23));
         contabilidadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1067,7 +1068,7 @@ public class Ventanal extends javax.swing.JFrame {
         revalidate();
         repaint();
         pack();
-        setSize(840, 400);
+        setSize(840, 430);
     }//GEN-LAST:event_acceptProductActionPerformed
 
     private void cancelProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelProductoActionPerformed
