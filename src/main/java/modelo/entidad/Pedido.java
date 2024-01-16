@@ -11,12 +11,18 @@ public class Pedido {
     private int usuarioId;
     private Date fecha;
     private BigDecimal precioTotal;
-    private List<Producto> productos;
+    private Producto productos;
     private String distribuidorId;
 
     /* Constructor vacío para crear un objeto Pedido sin valores */
     public Pedido() {
     
+    }
+    public Pedido (int usuarioId, Producto producto) {
+        this.usuarioId = usuarioId;
+        this.fecha = new Date(System.currentTimeMillis());
+        this.precioTotal = new BigDecimal(0);
+        this.productos = producto;
     }
 
     /* Constructor para crear un Pedido en código antes de guardarlo en la BD */
@@ -49,7 +55,7 @@ public class Pedido {
         return this.precioTotal;
     }
 
-    public List<Producto> getProductos(){
+    public Producto getProductos(){
         return this.productos;
     }
 
@@ -73,7 +79,7 @@ public class Pedido {
         this.precioTotal = precioTotal;
     }
 
-    public void setProductos(List<Producto> productos){
+    public void setProductos(Producto productos){
         this.productos = productos;
     }
 
@@ -87,35 +93,6 @@ public class Pedido {
 
     public void setUserId(int usuarioId){
         this.usuarioId = usuarioId;
-    }
-
-    public boolean addProducto(Producto producto){
-        if(!inLista(producto)){
-            return false;
-        }else{
-            this.productos.add(producto);
-            this.precioTotal = this.precioTotal.add(producto.getPrecio());
-            return true;
-        }
-    }
-
-    public boolean removeProducto(Producto producto){
-        if(!inLista(producto)){
-            return false;
-        }else{
-            this.productos.remove(producto);
-            this.precioTotal = this.precioTotal.subtract(producto.getPrecio());
-            return true;
-        }
-    }
-
-    private boolean inLista(Producto producto){
-        for(int i = 0; i < productos.size(); i++){
-            if(producto.isEqual(productos.get(i))){
-                return true;
-            }
-        }
-        return false;
     }
 
 }
