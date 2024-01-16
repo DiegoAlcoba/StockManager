@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -34,6 +35,7 @@ public class Ventanal extends javax.swing.JFrame {
     DefaultTableModel dtmPedido = new DefaultTableModel();
     DefaultTableModel dtmProducto = new DefaultTableModel();
     DefaultTableModel dtmDistribuidor = new DefaultTableModel();
+    DefaultTableModel dtmUsuario = new DefaultTableModel();
     
     /**
      * Creates new form Ventanal
@@ -44,12 +46,15 @@ public class Ventanal extends javax.swing.JFrame {
         String[] tituloPedido = new String[]{"ID", "Usuario", "Fecha", "Precio", "Distribuidor", "Productos"};
         String[] tituloProducto = new String[]{"Nombre", "Tipo", "Distribuidor", "Precio", "Cantidad"};
         String[] tituloDistribuidor = new String[]{"ID", "Nombre", "Mail", "Telefono"};
+        String[] tituloUsuario = new String[]{"Nombre", "Rango", "SSId", "Mail", "Telefono"};
         dtmProducto.setColumnIdentifiers(tituloProducto);
         dtmPedido.setColumnIdentifiers(tituloPedido);
         dtmDistribuidor.setColumnIdentifiers(tituloDistribuidor);
+        dtmUsuario.setColumnIdentifiers(tituloUsuario);
         pedidosTable.setModel(dtmPedido);
         productosTable.setModel(dtmProducto);
         distribuidoresTable.setModel(dtmDistribuidor);
+        usuariosTable.setModel(dtmUsuario);
         
         
     }
@@ -437,7 +442,7 @@ public class Ventanal extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(usuariosTable);
 
-        addUsuario.setText("Añadir Distribuidor");
+        addUsuario.setText("Añadir Usuario");
         addUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addUsuarioActionPerformed(evt);
@@ -575,7 +580,7 @@ public class Ventanal extends javax.swing.JFrame {
         ingresaProd.add(precio);
         ingresaProd.add(new JLabel("Cantidad"));
         ingresaProd.add(cantidad);
-        int result = JOptionPane.showConfirmDialog(null, ingresaProd, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, ingresaProd, "Añadir producto", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             Producto producto = new Producto(nombre.getText(), dist.getText(), type.getText(), new BigDecimal(precio.getText()), Integer.parseInt(cantidad.getText()));
             if(OperacionesBD_producto.addProducto_BD(producto)){
@@ -643,7 +648,12 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_addDistActionPerformed
 
     private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
-        
+        usuariosMenu.setVisible(true);
+        menuAdmin.setVisible(false);
+        revalidate();
+        repaint();
+        pack();
+        setSize(840, 400);
     }//GEN-LAST:event_usuariosButtonActionPerformed
 
     private void doPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doPedidoActionPerformed
@@ -651,11 +661,50 @@ public class Ventanal extends javax.swing.JFrame {
     }//GEN-LAST:event_doPedidoActionPerformed
 
     private void addUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUsuarioActionPerformed
-        // TODO add your handling code here:
+        JPanel ingresaUsuario = new JPanel();
+        ingresaUsuario.setLayout(new BoxLayout(ingresaUsuario, BoxLayout.Y_AXIS)); // Establecer el layout a BoxLayout
+        ingresaUsuario.setPreferredSize(new Dimension(300, 300)); // Establecer el tamaño preferido del panel
+        JTextField nombre = new JTextField();
+        JCheckBox rango = new JCheckBox();
+        JTextField SSId = new JTextField();
+        JTextField mail = new JTextField();
+        JTextField tlfn = new JTextField();
+        JTextField user = new JTextField();
+        JTextField pass = new JTextField();
+        ingresaUsuario.add(new JLabel("Nombre"));
+        ingresaUsuario.add(nombre);
+        ingresaUsuario.add(new JLabel("SSId"));
+        ingresaUsuario.add(SSId);
+        ingresaUsuario.add(new JLabel("Mail"));
+        ingresaUsuario.add(mail);
+        ingresaUsuario.add(new JLabel("Telefono"));
+        ingresaUsuario.add(tlfn);
+        ingresaUsuario.add(new JLabel("Usuario"));
+        ingresaUsuario.add(user);
+        ingresaUsuario.add(new JLabel("Contraseña"));
+        ingresaUsuario.add(pass);
+        ingresaUsuario.add(new JLabel("Administrador"));
+        ingresaUsuario.add(rango);
+
+        int result = JOptionPane.showConfirmDialog(null, ingresaUsuario, "Añadir usuario", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION){
+            Usuario usuario = new Usuario(user.getText(),pass.getText(), rango.isSelected(), nombre.getText(), Integer.parseInt(SSId.getText()), mail.getText(), Integer.parseInt(tlfn.getText()));
+            if(OperacionesBD_usuario.addUsuario_BD(usuario)){
+                dtmUsuario.addRow(new Object[]{usuario.getNombre(), usuario.getPrivileges()? "admin" : "usuario", usuario.getSSId(), usuario.getEmail(), usuario.getTlfn()});
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El usuario no se ha podido añadir", "Error de acceso", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_addUsuarioActionPerformed
 
     private void atras4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras4ActionPerformed
-        // TODO add your handling code here:
+        usuariosMenu.setVisible(false);
+        menuAdmin.setVisible(true);
+        revalidate();
+        repaint();
+        pack();
+        setSize(400, 600);
     }//GEN-LAST:event_atras4ActionPerformed
 
     /**
