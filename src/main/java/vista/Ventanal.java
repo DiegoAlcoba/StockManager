@@ -92,6 +92,11 @@ public class Ventanal extends javax.swing.JFrame {
         distribuidoresTable = new javax.swing.JTable();
         addDist = new javax.swing.JButton();
         atras3 = new javax.swing.JButton();
+        usuariosMenu = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        usuariosTable = new javax.swing.JTable();
+        addUsuario = new javax.swing.JButton();
+        atras4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StockManager");
@@ -260,6 +265,11 @@ public class Ventanal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(pedidosTable);
 
         doPedido.setText("Hacer Pedido");
+        doPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doPedidoActionPerformed(evt);
+            }
+        });
 
         atras.setText("Atras");
         atras.addActionListener(new java.awt.event.ActionListener() {
@@ -411,6 +421,64 @@ public class Ventanal extends javax.swing.JFrame {
 
         Contenedor.add(distribuidoresPanel, "card6");
 
+        usuariosMenu.setMaximumSize(new java.awt.Dimension(400, 250));
+        usuariosMenu.setMinimumSize(new java.awt.Dimension(400, 250));
+
+        usuariosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(usuariosTable);
+
+        addUsuario.setText("Añadir Distribuidor");
+        addUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUsuarioActionPerformed(evt);
+            }
+        });
+
+        atras4.setText("Atras");
+        atras4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout usuariosMenuLayout = new javax.swing.GroupLayout(usuariosMenu);
+        usuariosMenu.setLayout(usuariosMenuLayout);
+        usuariosMenuLayout.setHorizontalGroup(
+            usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(usuariosMenuLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(usuariosMenuLayout.createSequentialGroup()
+                        .addComponent(atras4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addUsuario))))
+        );
+        usuariosMenuLayout.setVerticalGroup(
+            usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(usuariosMenuLayout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(usuariosMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(atras4)
+                    .addComponent(addUsuario))
+                .addContainerGap(181, Short.MAX_VALUE))
+        );
+
+        Contenedor.add(usuariosMenu, "card6");
+
         getContentPane().add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 1, 810, 500));
 
         pack();
@@ -460,7 +528,7 @@ public class Ventanal extends javax.swing.JFrame {
         Producto[] productos = OperacionesBD_producto.getListaProductos_BD();
         dtmProducto.setRowCount(0);
         for(int i = 0; i < productos.length; i++){
-            dtmProducto.addRow(new Object[]{productos[i].getName(), productos[i].getTipo(), productos[i].getDistribId(), productos[i].getPrecio()});
+            dtmProducto.addRow(new Object[]{productos[i].getName(), productos[i].getTipo(), productos[i].getDistribId(), productos[i].getPrecio(), productos[i].getCantidad()});
         }
         productosPanel.setVisible(true);
         menuAdmin.setVisible(false);
@@ -510,9 +578,12 @@ public class Ventanal extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, ingresaProd, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             Producto producto = new Producto(nombre.getText(), dist.getText(), type.getText(), new BigDecimal(precio.getText()), Integer.parseInt(cantidad.getText()));
-            //TODO: si addProducto_BD es false no añadir y mostrar panel de error
-            OperacionesBD_producto.addProducto_BD(producto);
-            dtmProducto.addRow(new Object[]{producto.getName(), producto.getTipo(), producto.getDistribId(), producto.getPrecio(), producto.getCantidad()});
+            if(OperacionesBD_producto.addProducto_BD(producto)){
+                dtmProducto.addRow(new Object[]{producto.getName(), producto.getTipo(), producto.getDistribId(), producto.getPrecio(), producto.getCantidad()});
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El producto no se ha podido añadir", "Error de acceso", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_addProductoActionPerformed
 
@@ -562,15 +633,30 @@ public class Ventanal extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, ingresaDist, "Añadir distribuidor", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             Distribuidor distribuidor = new Distribuidor(id.getText(), nombre.getText(), mail.getText(), Integer.parseInt(tlfn.getText()));
-            //TODO: si addDistrib_BD es false no añadir y mostrar panel de error
-            OperacionesBD_distribuidor.addDistrib_BD(distribuidor);
-            dtmDistribuidor.addRow(new Object[]{distribuidor.getId(), distribuidor.getNombre(), distribuidor.getMail(), distribuidor.getTlfn()});
+            if(OperacionesBD_distribuidor.addDistrib_BD(distribuidor)){
+                dtmDistribuidor.addRow(new Object[]{distribuidor.getId(), distribuidor.getNombre(), distribuidor.getMail(), distribuidor.getTlfn()});
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El distribuidor no se ha podido añadir", "Error de acceso", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_addDistActionPerformed
 
     private void usuariosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_usuariosButtonActionPerformed
+
+    private void doPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_doPedidoActionPerformed
+
+    private void addUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addUsuarioActionPerformed
+
+    private void atras4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_atras4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -616,9 +702,11 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JButton access;
     private javax.swing.JButton addDist;
     private javax.swing.JButton addProducto;
+    private javax.swing.JButton addUsuario;
     private javax.swing.JButton atras;
     private javax.swing.JButton atras2;
     private javax.swing.JButton atras3;
+    private javax.swing.JButton atras4;
     private javax.swing.JButton contabilidadButton;
     private javax.swing.JButton distribuidoresButton;
     private javax.swing.JPanel distribuidoresPanel;
@@ -629,6 +717,7 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel loggin;
     private javax.swing.JPanel menuAdmin;
     private javax.swing.JPasswordField passField;
@@ -640,5 +729,7 @@ public class Ventanal extends javax.swing.JFrame {
     private javax.swing.JTable productosTable;
     private javax.swing.JTextField userText;
     private javax.swing.JButton usuariosButton;
+    private javax.swing.JPanel usuariosMenu;
+    private javax.swing.JTable usuariosTable;
     // End of variables declaration//GEN-END:variables
 }
